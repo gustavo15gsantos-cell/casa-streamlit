@@ -2,17 +2,20 @@ import streamlit as st
 from ui.estilo import exibir_logo_tech_home
 
 def renderizar_home():
-    # Exibe a logo oficial clicável no topo (com link direto para a home)
+    # Exibe a logo oficial clicável no topo
     exibir_logo_tech_home("Infraestrutura Residencial Inteligente")
 
     # -------------------------------------------------------------
-    # BANNER CORPORATIVO DE ALTA DEFINIÇÃO (Substitui a imagem antiga)
+    # IMAGEM DE ALTA QUALIDADE E PROFISSIONAL (Substituída)
     # -------------------------------------------------------------
+    st.image(
+        "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1200&q=80",
+        use_container_width=True,
+        caption="Divisão Corporativa • Tecnologia IoT de Alta Performance"
+    )
+
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #090D16 0%, #020617 100%); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 20px; padding: 32px 20px; text-align: center; margin-bottom: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.6);">
-        <div style="display: inline-block; background: rgba(56, 189, 248, 0.1); color: #38BDF8; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 14px;">
-            ⚡ DIVISÃO CORPORATIVA • TECNOLOGIA IOT
-        </div>
+    <div style="text-align: center; margin: 20px 0;">
         <h1 style="color: #FFFFFF; font-size: 1.6rem; font-weight: 800; line-height: 1.3; margin-bottom: 12px;">
             O futuro da automação residencial de alto padrão.
         </h1>
