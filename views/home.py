@@ -2,7 +2,7 @@ import streamlit as st
 from ui.estilo import exibir_logo_tech_home
 
 def renderizar_home():
-    exibir_logo_tech_home("Global Smart Infrastructure")
+    exibir_logo_tech_home("Infraestrutura Residencial Inteligente")
 
     # Banner Multinacional de Alto Impacto
     st.markdown("""
@@ -11,7 +11,7 @@ def renderizar_home():
             <img src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1200&q=80" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;" alt="Smart Ecosystem">
         </div>
         <div style="display: inline-block; background: rgba(56, 189, 248, 0.15); color: #38BDF8; padding: 5px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">
-            Enterprise Division
+            Divisão Corporativa
         </div>
         <h1 style="color: #FFFFFF; font-size: 1.8rem; font-weight: 800; line-height: 1.25; margin-bottom: 12px;">
             O futuro da automação residencial de alto padrão.
@@ -29,22 +29,22 @@ def renderizar_home():
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Seção de Pilares Tecnológicos
+    # Seção de Pilares Tecnológicos (Em Português)
     st.markdown('<p style="color: #94A3B8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 14px;">Pilares Tecnológicos</p>', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">💡</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Smart LED</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">💡</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Iluminação Inteligente</div></div>', unsafe_allow_html=True)
     with col2:
-        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">🔌</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Power Grid</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">🔌</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Rede Elétrica IoT</div></div>', unsafe_allow_html=True)
     with col3:
-        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">🎙️</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Voice AI</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">🎙️</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Comando por Voz IA</div></div>', unsafe_allow_html=True)
 
     col4, col5 = st.columns(2)
     with col4:
-        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">⚙️</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Custom Solutions</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">⚙️</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Soluções Sob Medida</div></div>', unsafe_allow_html=True)
     with col5:
-        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">🛡️</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Enterprise Security</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">🛡️</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Segurança Avançada</div></div>', unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -55,4 +55,4 @@ def renderizar_home():
             st.session_state["pagina_atual"] = "funcionarios"
             st.rerun()
 
-    st.markdown('<p style="text-align: center; color: #475569; font-size: 0.78rem; margin-top: 24px; font-weight: 500;">© 2026 TECH HOME GLOBAL INC. All rights reserved.</p>', unsafe_allow_html=True)
+    st.markdown('<p style="text-align: center; color: #475569; font-size: 0.78rem; margin-top: 24px; font-weight: 500;">© 2026 TECH HOME GLOBAL INC. Todos os direitos reservados.</p>', unsafe_allow_html=True)
