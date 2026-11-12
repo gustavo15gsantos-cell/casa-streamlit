@@ -1,201 +1,240 @@
 import streamlit as st
 import json
 import os
-import urllib.parse
 from datetime import datetime
 from ui.estilo import exibir_logo_tech_home
 
-ARQUIVO_PEDIDOS = "pedidos_reais.json"
-
-def salvar_pedido_real(dados, total):
-    pedidos = []
-    if os.path.exists(ARQUIVO_PEDIDOS):
+def carregar_pedidos():
+    if os.path.exists("pedidos_reais.json"):
         try:
-            with open(ARQUIVO_PEDIDOS, "r", encoding="utf-8") as f:
-                pedidos = json.load(f)
-        except Exception:
-            pedidos = []
+            with open("pedidos_reais.json", "r", encoding="utf-8") as f:
+                return json.load(f)
+        except:
+            return []
+    return []
 
-    # Evita duplicar o mesmo pedido se o usuário atualizar a página na etapa final
-    if any(p.get("nome") == dados["nome"].strip() and p.get("telefone") == dados["telefone"].strip() for p in pedidos):
-        return
-
-    partes_nome = dados["nome"].strip().split()
-    if len(partes_nome) >= 2:
-        inicial = (partes_nome[0][0] + partes_nome[-1][0]).upper()
-    elif len(partes_nome) == 1:
-        inicial = partes_nome[0][:2].upper()
-    else:
-        inicial = "CL"
-
-    novo_pedido = {
-        "id": datetime.now().strftime("%Y%m%d%H%M%S"),
-        "inicial": inicial,
-        "nome": dados["nome"].strip(),
-        "telefone": dados["telefone"].strip(),
-        "pacote": dados["pacote"],
-        "fita_led": dados.get("fita_led", "Não selecionado"),
-        "alexa": dados.get("alexa", "Não selecionado"),
-        "agendamento": "A combinar no WhatsApp",
-        "total": f"R$ {total:.2f}",
-        "status": "Pendente"
-    }
-
-    pedidos.insert(0, novo_pedido)
-    with open(ARQUIVO_PEDIDOS, "w", encoding="utf-8") as f:
-        json.dump(pedidos, f, ensure_ascii=False, indent=2)
+def salvar_pedido(novo_pedido):
+    pedidos = carregar_pedidos()
+    pedidos.append(novo_pedido)
+    with open("pedidos_reais.json", "w", encoding="utf-8") as f:
+        json.dump(pedidos, f, ensure_ascii=False, indent=4)
 
 def renderizar_pacote():
+    exibir_logo_tech_home("Configuração de Ecossistema & Suporte")
+
+    # Inicializa o estado das etapas
     if "etapa" not in st.session_state:
         st.session_state["etapa"] = 1
-    if "dados_pedido" not in st.session_state:
-        st.session_state["dados_pedido"] = {
-            "pacote": "Completo",
-            "valor_base": 199.0,
-            "fita_led": "Fita LED - 2m",
-            "valor_fita": 99.0,
-            "alexa": "Echo Dot 5ª Geração",
-            "valor_alexa": 349.0,
-            "nome": "",
-            "telefone": ""
-        }
+    if "tipo_servico" not in st.session_state:
+        st.session_state["tipo_servico"] = "Novo Ecossistema"
 
     etapa = st.session_state["etapa"]
 
-    if st.button("← Voltar"):
-        if etapa > 1:
-            st.session_state["etapa"] -= 1
-            st.rerun()
-        else:
-            st.session_state["pagina_atual"] = "home"
-            st.rerun()
-
-    exibir_logo_tech_home("Monte seu Pacote • Automação Residencial")
-
-    st.markdown(f'<div style="font-size: 0.85rem; color: #60A5FA; font-weight: 600; margin-bottom: 6px;">Etapa {etapa} de 6</div>', unsafe_allow_html=True)
-    st.progress(etapa / 6.0)
-    st.markdown("<br>", unsafe_allow_html=True)
+    # Barra de Progresso Superior
+    st.markdown(f"""
+    <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 12px; text-align: center; margin-bottom: 24px;">
+        <span style="color: #38BDF8; font-weight: 700; font-size: 0.9rem;">ETAPA {etapa} DE 6</span>
+        <div style="color: #94A3B8; font-size: 0.8rem; margin-top: 2px;">
+            {
+                'Escolha do Tipo de Atendimento' if etapa == 1 else 
+                ('Seleção de Dispositivos' if etapa == 2 else 
+                ('Iluminação LED' if etapa == 3 else 
+                ('Assistente de Voz' if etapa == 4 else 
+                ('Resumo do Projeto' if etapa == 5 else 'Dados e Finalização'))))
+            }
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # ETAPA 1: ESCOLHER PACOTE BASE
+    # ETAPA 1: ESCOLHA DO TIPO DE SERVIÇO (NOVO OU REPARO)
     # -------------------------------------------------------------
     if etapa == 1:
-        st.markdown("### 1. Escolher Pacote Base")
-        st.markdown("<p style='color: #94A3B8; font-size: 0.9rem;'>Selecione a modalidade ideal para a sua residência:</p>", unsafe_allow_html=True)
+        st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">O que você precisa hoje?</h3>', unsafe_allow_html=True)
         
-        pacotes = [
-            ("💡 Pacote Fita LED", "Iluminação indireta e cenários customizados", 199.0),
-            ("🔌 Pacote Tomadas", "Controle de eletrodomésticos via aplicativo", 250.0),
-            ("⭐ Pacote Completo (Recomendado)", "LED + Tomadas + Assistente de Voz", 598.0),
-            ("⚙️ Pacote Personalizado", "Monte sob medida com nosso suporte", 150.0),
-            ("🔧 Apenas Configuração", "Configuração de dispositivos que você já possui", 120.0)
-        ]
+        tipo = st.radio(
+            "Selecione o serviço:",
+            ["Instalar Novo Ecossistema TECH HOME", "Reparo / Manutenção Técnica"],
+            label_visibility="collapsed"
+        )
 
-        for nome, desc, preco in pacotes:
-            selecionado = st.session_state["dados_pedido"]["pacote"] == nome
-            classe_card = "tech-card-active" if selecionado else "tech-card"
-            st.markdown(f'<div class="{classe_card}"><div style="font-weight: 700; color: #FFFFFF; font-size: 1.05rem;">{nome}</div><div style="color: #94A3B8; font-size: 0.85rem; margin-top: 4px;">{desc}</div><div style="color: #2589F5; font-weight: 700; font-size: 0.95rem; margin-top: 8px;">R$ {preco:.2f}</div></div>', unsafe_allow_html=True)
-            if st.button(f"Selecionar {nome.split()[1]}", key=f"sel_pac_{nome}"):
-                st.session_state["dados_pedido"]["pacote"] = nome
-                st.session_state["dados_pedido"]["valor_base"] = preco
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        if "Reparo" in tipo:
+            st.markdown("""
+            <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #EF4444; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                <div style="color: #FCA5A5; font-weight: 700; font-size: 0.92rem; margin-bottom: 6px;">⚠️ ATENÇÃO AOS TERMOS DE REPARO:</div>
+                <p style="color: #CBD5E1; font-size: 0.85rem; line-height: 1.5; margin: 0;">
+                    Realizamos serviços de reparo, manutenção e reconfiguração <b>exclusivamente em instalações realizadas pela TECH HOME</b>. Não prestamos suporte, assistência ou manutenção em dispositivos ou redes instalados por terceiros ou outras empresas.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            st.session_state["tipo_servico"] = "Reparo Técnico (Exclusivo Instalação TECH HOME)"
+        else:
+            st.session_state["tipo_servico"] = "Novo Ecossistema"
+
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("⬅️ Voltar ao Início"):
+                st.session_state["pagina_atual"] = "home"
+                st.rerun()
+        with col2:
+            if st.button("Avançar ➡️"):
                 st.session_state["etapa"] = 2
                 st.rerun()
 
     # -------------------------------------------------------------
-    # ETAPA 2: ESCOLHER FITA LED
+    # ETAPA 2: SELEÇÃO DE PACOTE / DISPOSITIVOS
     # -------------------------------------------------------------
     elif etapa == 2:
-        st.markdown("### 2. Escolher Fita LED")
-        st.markdown("<p style='color: #94A3B8; font-size: 0.9rem;'>Selecione o comprimento da fita LED para o seu pacote</p>", unsafe_allow_html=True)
+        st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Selecione o Pacote Base</h3>', unsafe_allow_html=True)
+        
+        pacote_escolhido = st.radio(
+            "Escolha o pacote:",
+            ["Pacote Essencial (2 Módulos Smart + Central)", "Pacote Avançado (4 Módulos Smart + Central)", "Pacote Premium Enterprise (8 Módulos Smart + Central)"],
+            label_visibility="collapsed"
+        )
+        st.session_state["pacote_base"] = pacote_escolhido
 
-        fitas = [
-            ("Fita LED - 2m", 99.0),
-            ("Fita LED - 5m", 199.0),
-            ("Fita LED - 10m", 349.0),
-            ("Fita LED - 15m", 399.0),
-            ("Fita LED - 20m", 649.0)
-        ]
-
-        for nome, preco in fitas:
-            if st.button(f"{nome} — + R$ {preco:.2f}", key=f"fita_{nome}"):
-                st.session_state["dados_pedido"]["fita_led"] = nome
-                st.session_state["dados_pedido"]["valor_fita"] = preco
+        st.markdown("<br>", unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("⬅️ Voltar"):
+                st.session_state["etapa"] = 1
+                st.rerun()
+        with col2:
+            if st.button("Avançar ➡️"):
                 st.session_state["etapa"] = 3
                 st.rerun()
 
-        st.markdown('<div class="info-box-blue">ℹ️ A fita LED é instalada com fita dupla-face 3M e fonte incluída. Controlável via app.</div>', unsafe_allow_html=True)
-
     # -------------------------------------------------------------
-    # ETAPA 3: ESCOLHER ALEXA / DISPOSITIVO DE VOZ
+    # ETAPA 3: FITA LED ARQUITETÔNICA
     # -------------------------------------------------------------
     elif etapa == 3:
-        st.markdown("### 3. Escolher Central de Voz (Alexa)")
-        st.markdown("<p style='color: #94A3B8; font-size: 0.9rem;'>Escolha o dispositivo inteligente para comando por voz:</p>", unsafe_allow_html=True)
+        st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Iluminação Arquitetônica LED</h3>', unsafe_allow_html=True)
+        
+        fita_escolhida = st.radio(
+            "Deseja adicionar Fita LED RGB?",
+            ["Sem Fita LED", "Fita LED 5 Metros (Ambiente S/N)", "Fita LED 10 Metros (Duplo Ambiente)"],
+            label_visibility="collapsed"
+        )
+        st.session_state["fita_led"] = fita_escolhida
 
-        alexas = [
-            ("Echo Pop (Compacto)", 249.0),
-            ("Echo Dot 5ª Geração", 349.0),
-            ("Echo Show 5 (Com Tela)", 599.0),
-            ("Sem Assistente (Já possuo)", 0.0)
-        ]
-
-        for nome, preco in alexas:
-            if st.button(f"{nome} — + R$ {preco:.2f}" if preco > 0 else f"{nome}", key=f"alexa_{nome}"):
-                st.session_state["dados_pedido"]["alexa"] = nome
-                st.session_state["dados_pedido"]["valor_alexa"] = preco
+        st.markdown("<br>", unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("⬅️ Voltar"):
+                st.session_state["etapa"] = 2
+                st.rerun()
+        with col2:
+            if st.button("Avançar ➡️"):
                 st.session_state["etapa"] = 4
                 st.rerun()
 
     # -------------------------------------------------------------
-    # ETAPA 4: RESUMO PARCIAL
+    # ETAPA 4: ASSISTENTE DE VOZ
     # -------------------------------------------------------------
     elif etapa == 4:
-        st.markdown("### 4. Resumo do Pedido")
-        d = st.session_state["dados_pedido"]
-        total_parcial = d.get("valor_base", 199.0) + d.get("valor_fita", 99.0) + d.get("valor_alexa", 349.0)
-
-        st.markdown(f'<div class="tech-card"><div style="color: #60A5FA; font-weight: 700; margin-bottom: 8px;">Itens Selecionados:</div><div style="color: #F8FAFC; font-size: 0.9rem; margin-bottom: 4px;">• <b>Pacote:</b> {d["pacote"]}</div><div style="color: #F8FAFC; font-size: 0.9rem; margin-bottom: 4px;">• <b>Iluminação:</b> {d["fita_led"]}</div><div style="color: #F8FAFC; font-size: 0.9rem; margin-bottom: 8px;">• <b>Assistente:</b> {d["alexa"]}</div><hr style="border-color: #1E293B; margin: 10px 0;"><div style="color: #2589F5; font-weight: 800; font-size: 1.1rem;">Subtotal: R$ {total_parcial:.2f}</div></div>', unsafe_allow_html=True)
-
-        if st.button("Avançar para Contato →", key="avancar_contato"):
-            st.session_state["etapa"] = 5
-            st.rerun()
-
-    # -------------------------------------------------------------
-    # ETAPA 5: DADOS DO CLIENTE
-    # -------------------------------------------------------------
-    elif etapa == 5:
-        st.markdown("### 5. Seus Dados de Contato")
-        st.markdown("<p style='color: #94A3B8; font-size: 0.9rem;'>Informe seus dados para finalizarmos o atendimento:</p>", unsafe_allow_html=True)
-
-        nome_cliente = st.text_input("Seu Nome Completo", value=st.session_state["dados_pedido"]["nome"])
-        tel_cliente = st.text_input("Seu WhatsApp (com DDD)", value=st.session_state["dados_pedido"]["telefone"])
-
-        st.session_state["dados_pedido"]["nome"] = nome_cliente
-        st.session_state["dados_pedido"]["telefone"] = tel_cliente
+        st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Central de Comando por Voz</h3>', unsafe_allow_html=True)
+        
+        voz_escolhida = st.radio(
+            "Escolha o assistente:",
+            ["Echo Dot com Alexa (Incluso)", "Echo Show com Tela Inteligente", "Apenas Configuração (Já possuo dispositivo)"],
+            label_visibility="collapsed"
+        )
+        st.session_state["assistente_voz"] = voz_escolhida
 
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("Ver Resumo Final 🚀", key="ver_resumo_final"):
-            if not nome_cliente.strip() or not tel_cliente.strip():
-                st.warning("Por favor, preencha seu nome e WhatsApp.")
-            else:
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("⬅️ Voltar"):
+                st.session_state["etapa"] = 3
+                st.rerun()
+        with col2:
+            if st.button("Avançar ➡️"):
+                st.session_state["etapa"] = 5
+                st.rerun()
+
+    # -------------------------------------------------------------
+    # ETAPA 5: RESUMO EXECUTIVO
+    # -------------------------------------------------------------
+    elif etapa == 5:
+        st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Resumo do Projeto</h3>', unsafe_allow_html=True)
+        
+        tipo_srv = st.session_state.get('tipo_servico', 'Novo Ecossistema')
+        pacote = st.session_state.get('pacote_base', 'Essencial')
+        fita = st.session_state.get('fita_led', 'Sem Fita')
+        voz = st.session_state.get('assistente_voz', 'Alexa')
+
+        st.markdown(f"""
+        <div class="tech-card">
+            <p style="color: #38BDF8; font-weight: 700; margin-bottom: 10px;">📋 ESPECIFICAÇÕES DO PEDIDO:</p>
+            <p style="color: #F8FAFC; font-size: 0.9rem; margin-bottom: 6px;"><b>Tipo:</b> {tipo_srv}</p>
+            <p style="color: #F8FAFC; font-size: 0.9rem; margin-bottom: 6px;"><b>Pacote:</b> {pacote}</p>
+            <p style="color: #F8FAFC; font-size: 0.9rem; margin-bottom: 6px;"><b>Iluminação:</b> {fita}</p>
+            <p style="color: #F8FAFC; font-size: 0.9rem; margin-bottom: 0;"><b>Assistente:</b> {voz}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("⬅️ Voltar"):
+                st.session_state["etapa"] = 4
+                st.rerun()
+        with col2:
+            if st.button("Avançar para Dados ➡️"):
                 st.session_state["etapa"] = 6
                 st.rerun()
 
     # -------------------------------------------------------------
-    # ETAPA 6: FINALIZAÇÃO E BOTÃO WHATSAPP
+    # ETAPA 6: DADOS DO CLIENTE E FINALIZAÇÃO WHATSAPP
     # -------------------------------------------------------------
     elif etapa == 6:
-        st.markdown("### 6. Pedido Pronto!")
-        d = st.session_state["dados_pedido"]
-        total_final = d.get("valor_base", 199.0) + d.get("valor_fita", 99.0) + d.get("valor_alexa", 349.0)
+        st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Dados para Contato</h3>', unsafe_allow_html=True)
+        
+        nome = st.text_input("Seu Nome Completo")
+        telefone = st.text_input("Seu WhatsApp (com DDD)")
 
-        # Salva o pedido automaticamente na Área dos Funcionários
-        salvar_pedido_real(d, total_final)
+        st.markdown("<br>", unsafe_allow_html=True)
 
-        st.markdown(f'<div class="tech-card"><div style="color: #60A5FA; font-weight: 700; margin-bottom: 10px;">Resumo TECH HOME:</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">👤 <b>Cliente:</b> {d["nome"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">📱 <b>WhatsApp:</b> {d["telefone"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">📦 <b>Pacote:</b> {d["pacote"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">💡 <b>LED:</b> {d["fita_led"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">🔊 <b>Alexa:</b> {d["alexa"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 8px;">📅 <b>Agendamento:</b> A combinar no WhatsApp</div><hr style="border-color: #1E293B; margin: 10px 0;"><div style="color: #2589F5; font-weight: 800; font-size: 1.15rem;">Total Estimado: R$ {total_final:.2f}</div></div>', unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("⬅️ Voltar"):
+                st.session_state["etapa"] = 5
+                st.rerun()
+        with col2:
+            if st.button("✅ FINALIZAR E ENVIAR AO WHATSAPP"):
+                if not nome or not telefone:
+                    st.error("Por favor, preencha seu nome e WhatsApp.")
+                else:
+                    tipo_srv = st.session_state.get('tipo_servico', 'Novo Ecossistema')
+                    pacote = st.session_state.get('pacote_base', 'Essencial')
+                    fita = st.session_state.get('fita_led', 'Sem Fita')
+                    voz = st.session_state.get('assistente_voz', 'Alexa')
 
-        texto_zap = f"Olá! Meu nome é {d['nome']}. Acabei de montar meu pacote na TECH HOME:\n- Pacote: {d['pacote']}\n- LED: {d['fita_led']}\n- Alexa: {d['alexa']}\n- Total: R$ {total_final:.2f}. Gostaria de entrar em contato para dúvidas e acertar data e horário!"
-        texto_codificado = urllib.parse.quote(texto_zap)
-        link_whatsapp = f"https://wa.me/5585999999999?text={texto_codificado}"
+                    novo_pedido = {
+                        "id": str(datetime.now().timestamp()),
+                        "data": datetime.now().strftime("%d/%m/%Y %H:%M"),
+                        "nome": nome,
+                        "telefone": telefone,
+                        "tipo": tipo_srv,
+                        "pacote": pacote,
+                        "fita_led": fita,
+                        "assistente": voz,
+                        "status": "Pendente"
+                    }
 
-        st.markdown(f'<a href="{link_whatsapp}" target="_blank" class="btn-whatsapp" style="text-align: center; line-height: 1.4;">💬 Entre em contato conosco para dúvidas e acertar algumas coisas como data e horário</a>', unsafe_allow_html=True)
+                    # Salva no arquivo JSON local para aparecer no portal executivo
+                    salvar_pedido(novo_pedido)
+
+                    # Prepara link do WhatsApp com mensagem corporativa formatada
+                    msg = f"*NOVO PEDIDO - TECH HOME*%0A%0A*Cliente:* {nome}%0A*WhatsApp:* {telefone}%0A*Serviço:* {tipo_srv}%0A*Pacote:* {pacote}%0A*Fita LED:* {fita}%0A*Assistente:* {voz}"
+                    link_wpp = f"https://wa.me/5511999999999?text={msg}"
+
+                    st.success("Pedido registrado com sucesso em nosso sistema!")
+                    st.markdown(f"""
+                    <a href="{link_wpp}" target="_blank" class="btn-whatsapp">
+                        💬 CLIQUE AQUI PARA ABRIR O WHATSAPP E FALAR COM A EQUIPE
+                    </a>
+                    """, unsafe_allow_html=True)
