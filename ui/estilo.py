@@ -36,7 +36,7 @@ def aplicar_estilo():
             box-shadow: 0 0 15px rgba(37, 137, 245, 0.25);
         }
 
-        /* Caixa de informação azul clara (igual à etapa da Fita LED) */
+        /* Caixa de informação azul clara */
         .info-box-blue {
             background-color: #DBEAFE;
             color: #1E3A8A;
@@ -64,6 +64,15 @@ def aplicar_estilo():
             background-color: #1D72D4;
             box-shadow: 0 0 12px rgba(37, 137, 245, 0.45);
             color: white;
+        }
+
+        /* Estilo especial para o botão da logo */
+        div[data-testid="stButton"] button[key*="btn_logo_home"] {
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            text-align: left !important;
+            box-shadow: none !important;
         }
 
         /* Botão verde estilo WhatsApp */
@@ -108,9 +117,16 @@ def aplicar_estilo():
     """, unsafe_allow_html=True)
 
 def exibir_logo_tech_home(subtitulo="Instalação e configuração de dispositivos com Alexa"):
+    # Criação do botão em cima da logo para voltar à Home ao clicar
+    if st.button("🏠 TECH HOME", key="btn_logo_home"):
+        st.session_state["pagina_atual"] = "home"
+        if "etapa" in st.session_state:
+            st.session_state["etapa"] = 1
+        st.rerun()
+
     st.markdown(f"""
-    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 18px;">
-        <svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div style="display: flex; align-items: center; gap: 14px; margin-top: -10px; margin-bottom: 18px;">
+        <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M22 10C27.5 6 36.5 6 42 10" stroke="#2589F5" stroke-width="3.5" stroke-linecap="round"/>
             <path d="M26 15C29.5 12.5 34.5 12.5 38 15" stroke="#2589F5" stroke-width="3.5" stroke-linecap="round"/>
             <path d="M12 32L32 16L52 32" stroke="#2589F5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -119,10 +135,10 @@ def exibir_logo_tech_home(subtitulo="Instalação e configuração de dispositiv
         </svg>
         <div>
             <div style="line-height: 1.05;">
-                <span style="font-size: 1.65rem; font-weight: 800; color: #2589F5; letter-spacing: 0.5px;">TECH</span>
-                <span style="font-size: 1.65rem; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px;"> HOME</span>
+                <span style="font-size: 1.55rem; font-weight: 800; color: #2589F5; letter-spacing: 0.5px;">TECH</span>
+                <span style="font-size: 1.55rem; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px;"> HOME</span>
             </div>
-            <div style="font-size: 0.82rem; color: #60A5FA; margin-top: 3px;">
+            <div style="font-size: 0.8rem; color: #60A5FA; margin-top: 3px;">
                 {subtitulo}
             </div>
         </div>
