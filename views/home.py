@@ -2,19 +2,16 @@ import streamlit as st
 from ui.estilo import exibir_logo_tech_home
 
 def renderizar_home():
-    # Exibe a logo oficial clicável no topo (redireciona para o início)
     exibir_logo_tech_home("Infraestrutura Residencial Inteligente")
 
     # -------------------------------------------------------------
-    # IMAGENS OTIMIZADAS SEPARADAS (Desktop vs Celular)
+    # IMAGENS RESPONSIVAS (Desktop vs Celular)
     # -------------------------------------------------------------
     st.markdown("""
     <style>
-        /* Por padrão, exibe a versão de computador e esconde a de celular */
         .img-desktop { display: block; width: 100%; }
         .img-mobile { display: none; }
 
-        /* Em telas de celular (até 768px de largura), esconde a de PC e mostra a otimizada para mobile */
         @media (max-width: 768px) {
             .img-desktop { display: none; }
             .img-mobile { display: block; width: 100%; }
