@@ -2,7 +2,6 @@ import streamlit as st
 from ui.estilo import exibir_logo_tech_home
 
 def renderizar_home():
-    # Exibe a logo oficial clicável no topo (redireciona para o início)
     exibir_logo_tech_home("Infraestrutura Residencial Inteligente")
 
     # -------------------------------------------------------------
@@ -42,7 +41,7 @@ def renderizar_home():
     </div>
     """, unsafe_allow_html=True)
 
-    # Botão de Ação Principal (Padrão original sem efeitos de brilho exagerados)
+    # Botão de Ação Principal
     if st.button("🚀 INICIAR CONFIGURAÇÃO DO ECOSSISTEMA", use_container_width=True):
         st.session_state["pagina_atual"] = "pacote"
         st.session_state["etapa"] = 1
@@ -105,7 +104,7 @@ def renderizar_home():
     """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # FAQ / PERGUNTAS FREQUENTES (Corrigido para usar st.markdown corretamente)
+    # FAQ / PERGUNTAS FREQUENTES (Sem erros de exibição)
     # -------------------------------------------------------------
     st.markdown("""
     <div class="tech-card">
