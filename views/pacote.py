@@ -20,9 +20,8 @@ def salvar_pedido(novo_pedido):
         json.dump(pedidos, f, ensure_ascii=False, indent=4)
 
 def renderizar_pacote():
-    exibir_logo_tech_home("Configuração de Ecossistema & Agendamento")
+    exibir_logo_tech_home("Configuração de Ecossistema & Suporte")
 
-    # Inicializa o estado das etapas
     if "etapa" not in st.session_state:
         st.session_state["etapa"] = 1
     if "tipo_servico" not in st.session_state:
@@ -40,7 +39,7 @@ def renderizar_pacote():
                 ('Seleção de Dispositivos' if etapa == 2 else 
                 ('Iluminação LED' if etapa == 3 else 
                 ('Assistente de Voz' if etapa == 4 else 
-                ('Resumo do Projeto' if etapa == 5 else 'Agendamento e Finalização'))))
+                ('Resumo do Projeto' if etapa == 5 else 'Dados e Finalização'))))
             }
         </div>
     </div>
@@ -183,25 +182,27 @@ def renderizar_pacote():
                 st.session_state["etapa"] = 4
                 st.rerun()
         with col2:
-            if st.button("Avançar para Agendamento ➡️"):
+            if st.button("Avançar para Dados ➡️"):
                 st.session_state["etapa"] = 6
                 st.rerun()
 
     # -------------------------------------------------------------
-    # ETAPA 6: CONTATO, LOCAL, DATA, HORA E FINALIZAÇÃO WHATSAPP
+    # ETAPA 6: DADOS DE CONTATO E MENSAGEM PARA AGENDAMENTO NO WHATSAPP
     # -------------------------------------------------------------
     elif etapa == 6:
-        st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">📅 Agendamento e Dados de Contato</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 12px;">Dados para Contato</h3>', unsafe_allow_html=True)
+
+        # Mensagem corporativa orientando o agendamento no WhatsApp
+        st.markdown("""
+        <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-left: 4px solid #38BDF8; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
+            <p style="color: #E2E8F0; font-size: 0.88rem; line-height: 1.5; margin: 0;">
+                💬 <b>Agendamento Direto:</b> Após finalizar abaixo, entre em contato conosco pelo WhatsApp para combinarmos o melhor <b>horário, local e data</b> para o seu atendimento.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
         
         nome = st.text_input("Seu Nome Completo")
         telefone = st.text_input("Seu WhatsApp (com DDD)")
-        local_instalacao = st.text_input("Local / Endereço Completo (Rua, Número, Bairro e Cidade)")
-        
-        col_d, col_h = st.columns(2)
-        with col_d:
-            data_visita = st.date_input("Data Preferida para Atendimento")
-        with col_h:
-            horario_visita = st.selectbox("Horário Preferido", ["Manhã (09:00 - 12:00)", "Tarde (13:00 - 17:00)", "Noite (18:00 - 20:00)"])
 
         st.markdown("<br>", unsafe_allow_html=True)
 
@@ -212,23 +213,19 @@ def renderizar_pacote():
                 st.rerun()
         with col2:
             if st.button("✅ FINALIZAR E ENVIAR AO WHATSAPP"):
-                if not nome or not telefone or not local_instalacao:
-                    st.error("Por favor, preencha seu nome, WhatsApp e o endereço do local.")
+                if not nome or not telefone:
+                    st.error("Por favor, preencha seu nome e WhatsApp.")
                 else:
                     tipo_srv = st.session_state.get('tipo_servico', 'Novo Ecossistema')
                     pacote = st.session_state.get('pacote_base', 'Essencial')
                     fita = st.session_state.get('fita_led', 'Sem Fita')
                     voz = st.session_state.get('assistente_voz', 'Alexa')
-                    data_str = data_visita.strftime("%d/%m/%Y")
 
                     novo_pedido = {
                         "id": str(datetime.now().timestamp()),
-                        "data_criacao": datetime.now().strftime("%d/%m/%Y %H:%M"),
+                        "data": datetime.now().strftime("%d/%m/%Y %H:%M"),
                         "nome": nome,
                         "telefone": telefone,
-                        "local": local_instalacao,
-                        "data_agendamento": data_str,
-                        "horario": horario_visita,
                         "tipo": tipo_srv,
                         "pacote": pacote,
                         "fita_led": fita,
@@ -236,16 +233,14 @@ def renderizar_pacote():
                         "status": "Pendente"
                     }
 
-                    # Salva no JSON para aparecer no portal executivo
                     salvar_pedido(novo_pedido)
 
-                    # Mensagem formatada para o WhatsApp
-                    msg = f"*NOVO AGENDAMENTO - TECH HOME*%0A%0A*Cliente:* {nome}%0A*WhatsApp:* {telefone}%0A*Local:* {local_instalacao}%0A*Data Desejada:* {data_str} ({horario_visita})%0A*Serviço:* {tipo_srv}%0A*Pacote:* {pacote}%0A*Fita LED:* {fita}%0A*Assistente:* {voz}"
+                    msg = f"*NOVO PEDIDO - TECH HOME*%0A%0A*Cliente:* {nome}%0A*WhatsApp:* {telefone}%0A*Serviço:* {tipo_srv}%0A*Pacote:* {pacote}%0A*Fita LED:* {fita}%0A*Assistente:* {voz}%0A%0A_Gostaria de combinar o horário, local e data para o atendimento._"
                     link_wpp = f"https://wa.me/5511999999999?text={msg}"
 
-                    st.success("Pedido e agendamento registrados com sucesso!")
+                    st.success("Pedido registrado com sucesso em nosso sistema!")
                     st.markdown(f"""
                     <a href="{link_wpp}" target="_blank" class="btn-whatsapp">
-                        💬 CLIQUE AQUI PARA ABRIR O WHATSAPP E CONFIRMAR AGENDAMENTO
+                        💬 ENTRAR EM CONTATO NO WHATSAPP PARA AGENDAR HORÁRIO, LOCAL E DATA
                     </a>
                     """, unsafe_allow_html=True)
