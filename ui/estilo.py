@@ -10,7 +10,7 @@ def aplicar_estilo():
         }
         .block-container {
             max-width: 520px;
-            padding-top: 1.5rem;
+            padding-top: 3.2rem;
             padding-bottom: 3rem;
         }
         /* Esconder menu padrão do Streamlit para parecer um App nativo */
