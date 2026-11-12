@@ -104,16 +104,19 @@ def renderizar_home():
     """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # FAQ / PERGUNTAS FREQUENTES (Sem erros de exibição)
+    # FAQ / PERGUNTAS FREQUENTES (Estrutura limpa sem markdown quebrado)
     # -------------------------------------------------------------
     st.markdown("""
     <div class="tech-card">
         <h3 style="color: #38BDF8; font-size: 1.1rem; font-weight: 700; margin-bottom: 14px;">❓ PERGUNTAS FREQUENTES</h3>
-        <p style="color: #F8FAFC; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">Preciso quebrar paredes para instalar?</p>
-        <p style="color: #CBD5E1; font-size: 0.85rem; margin-bottom: 12px;">Não! Todo o nosso sistema opera via rede sem fio criptografada de alta velocidade.</p>
-        
-        <p style="color: #F8FAFC; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">E se a internet cair?</p>
-        <p style="color: #CBD5E1; font-size: 0.85rem; margin-bottom: 0;">Os módulos locais continuam funcionando via automação interna e comandos manuais.</p>
+        <div style="margin-bottom: 12px;">
+            <div style="color: #F8FAFC; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">Preciso quebrar paredes para instalar?</div>
+            <div style="color: #CBD5E1; font-size: 0.85rem;">Não! Todo o nosso sistema opera via rede sem fio criptografada de alta velocidade.</div>
+        </div>
+        <div>
+            <div style="color: #F8FAFC; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">E se a internet cair?</div>
+            <div style="color: #CBD5E1; font-size: 0.85rem;">Os módulos locais continuam funcionando via automação interna e comandos manuais.</div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
