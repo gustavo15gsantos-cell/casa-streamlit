@@ -1,28 +1,47 @@
 import streamlit as st
-from ui.estilo import aplicar_estilo
+from ui.estilo import carregar_estilo_global
 from views.home import renderizar_home
 from views.pacote import renderizar_pacote
 from views.funcionarios import renderizar_funcionarios
 
-# Logo oficial da TECH HOME em SVG embutido diretamente (não depende de arquivo externo e nunca falha!)
-icone_tech_home = """data:image/svg+xml;utf8,<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="16" fill="%23020617"/><path d="M22 14C27.5 10 36.5 10 42 14" stroke="%2338BDF8" stroke-width="4.5" stroke-linecap="round"/><path d="M12 32L32 16L52 32" stroke="%2338BDF8" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 28V50H46V28" stroke="%2338BDF8" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 24L24 37H33L30 48L42 33H33L34 24Z" fill="%23FFFFFF"/></svg>"""
-
-# Configuração da aba do navegador com a logo oficial
 st.set_page_config(
-    page_title="TECH HOME • Automação Residencial de Alto Padrão",
-    page_icon=icone_tech_home,
-    layout="centered",
-    initial_sidebar_state="collapsed"
+    page_title="TECH HOME • Automação Residencial e IoT",
+    page_icon="⚡",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# Aplica o design system corporativo
-aplicar_estilo()
+carregar_estilo_global()
 
-# Gerenciamento de páginas do app
+# Inicializar estado da página se não existir
 if "pagina_atual" not in st.session_state:
     st.session_state["pagina_atual"] = "home"
 
-pagina = st.session_state["pagina_atual"]
+# Menu lateral de navegação
+with st.sidebar:
+    st.markdown("""
+        <div style="text-align: center; padding: 10px 0;">
+            <h2 style="color: #38BDF8; margin: 0; font-size: 1.4rem;">⚡ TECH HOME</h2>
+            <p style="color: #94A3B8; font-size: 0.8rem; margin: 5px 0 0 0;">Infraestrutura Inteligente</p>
+        </div>
+        <hr style="border-color: rgba(56, 189, 248, 0.2);">
+    """, unsafe_allow_html=True)
+    
+    escolha = st.radio(
+        "Navegação",
+        ["🏠 Início", "⚙️ Configurar Ecossistema", "🔐 Portal Executivo"],
+        label_visibility="collapsed"
+    )
+    
+    if "Início" in escolha:
+        st.session_state["pagina_atual"] = "home"
+    elif "Configurar" in escolha:
+        st.session_state["pagina_atual"] = "pacote"
+    elif "Portal" in escolha:
+        st.session_state["pagina_atual"] = "funcionarios"
+
+# Renderização baseada no estado atual
+pagina = st.session_state.get("pagina_atual", "home")
 
 if pagina == "home":
     renderizar_home()

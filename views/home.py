@@ -6,7 +6,6 @@ def renderizar_home():
 
     st.markdown("""
     <style>
-        /* Regras gerais para Imagens e Layout Desktop vs Mobile */
         .img-desktop { display: block; width: 100%; max-width: 800px; margin: 0 auto; }
         .img-mobile { display: none; }
         
@@ -15,22 +14,12 @@ def renderizar_home():
             .img-mobile { display: block; width: 100%; }
         }
 
-        /* Grid de Conteúdo Exclusivo para Desktop */
         @media (min-width: 768px) {
             .desktop-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 20px;
                 margin-bottom: 20px;
-            }
-            .desktop-grid-3 {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-                margin-bottom: 20px;
-            }
-            .full-width {
-                grid-column: 1 / -1;
             }
         }
     </style>
@@ -59,12 +48,10 @@ def renderizar_home():
 
     if st.button("🚀 INICIAR CONFIGURAÇÃO DO ECOSSISTEMA", use_container_width=True):
         st.session_state["pagina_atual"] = "pacote"
-        st.session_state["etapa"] = 1
         st.rerun()
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Grid de 2 colunas para Padrão Corporativo e Pilares de Engenharia no PC
     st.markdown("""
     <div class="desktop-grid">
         <div class="tech-card" style="margin-bottom: 0;">
@@ -99,7 +86,6 @@ def renderizar_home():
     </div>
     """, unsafe_allow_html=True)
 
-    # Grid de 2 colunas para Cenários de Uso e Perguntas Frequentes no PC
     st.markdown("""
     <div class="desktop-grid">
         <div class="tech-card" style="margin-bottom: 0;">
