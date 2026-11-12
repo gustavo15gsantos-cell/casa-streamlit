@@ -1,17 +1,16 @@
 import streamlit as st
-import os
 from ui.estilo import aplicar_estilo
 from views.home import renderizar_home
 from views.pacote import renderizar_pacote
 from views.funcionarios import renderizar_funcionarios
 
-# Verifica se o arquivo de logo existe para usar na aba do navegador
-icone_aba = "logo.png" if os.path.exists("logo.png") else "⚡"
+# Logo oficial da TECH HOME em SVG embutido diretamente (não depende de arquivo externo e nunca falha!)
+icone_tech_home = """data:image/svg+xml;utf8,<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="16" fill="%23020617"/><path d="M22 14C27.5 10 36.5 10 42 14" stroke="%2338BDF8" stroke-width="4.5" stroke-linecap="round"/><path d="M12 32L32 16L52 32" stroke="%2338BDF8" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 28V50H46V28" stroke="%2338BDF8" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 24L24 37H33L30 48L42 33H33L34 24Z" fill="%23FFFFFF"/></svg>"""
 
-# Configuração da aba do navegador com a sua logo real
+# Configuração da aba do navegador com a logo oficial
 st.set_page_config(
     page_title="TECH HOME • Automação Residencial de Alto Padrão",
-    page_icon=icone_aba,
+    page_icon=icone_tech_home,
     layout="centered",
     initial_sidebar_state="collapsed"
 )
