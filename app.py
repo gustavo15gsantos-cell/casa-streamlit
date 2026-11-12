@@ -1,13 +1,17 @@
 import streamlit as st
+import os
 from ui.estilo import aplicar_estilo
 from views.home import renderizar_home
 from views.pacote import renderizar_pacote
 from views.funcionarios import renderizar_funcionarios
 
-# Configuração da aba do navegador (Título e Ícone / Favicon)
+# Verifica se o arquivo de logo existe para usar na aba do navegador
+icone_aba = "logo.png" if os.path.exists("logo.png") else "⚡"
+
+# Configuração da aba do navegador com a sua logo real
 st.set_page_config(
     page_title="TECH HOME • Automação Residencial de Alto Padrão",
-    page_icon="⚡",  # Aqui você pode colocar "⚡", "🏠" ou o caminho de uma imagem PNG sua
+    page_icon=icone_aba,
     layout="centered",
     initial_sidebar_state="collapsed"
 )
