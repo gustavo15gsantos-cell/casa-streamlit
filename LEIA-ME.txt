@@ -1,0 +1,18 @@
+CASA-STREAMLIT - Etapa 1 (site base)
+
+COMO RODAR (Windows)
+1. Instale o Python em python.org/downloads (marque "Add python.exe to PATH").
+2. Extraia este ZIP (botao direito > Extrair tudo).
+3. Abra o VS Code > File > Open Folder > escolha a pasta casa-streamlit.
+4. Abra o terminal: Terminal > New Terminal.
+5. Rode, um comando por vez:
+     python -m venv .venv
+     .venv\Scripts\activate
+     pip install -r requirements.txt
+     streamlit run app.py
+6. O navegador abre em http://localhost:8501
+   Para parar o site: Ctrl + C no terminal.
+
+ATALHO: de dois cliques em iniciar.bat (faz tudo sozinho).
+
+ONDE MUDAR OS TEXTOS: config/site.py

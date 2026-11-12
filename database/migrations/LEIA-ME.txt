@@ -1,0 +1,1 @@
+Aqui ficarao os arquivos SQL do Supabase (Etapa 2).
