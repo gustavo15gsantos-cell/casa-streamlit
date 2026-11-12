@@ -2,10 +2,11 @@ import streamlit as st
 from ui.estilo import exibir_logo_tech_home
 
 def renderizar_home():
+    # Exibe a logo oficial clicável no topo (redireciona para o início)
     exibir_logo_tech_home("Infraestrutura Residencial Inteligente")
 
     # -------------------------------------------------------------
-    # ESTILOS CSS PARA AS IMAGENS E PARA DESTACAR O BOTÃO PRINCIPAL
+    # IMAGENS RESPONSIVAS (Desktop vs Celular)
     # -------------------------------------------------------------
     st.markdown("""
     <style>
@@ -15,24 +16,6 @@ def renderizar_home():
         @media (max-width: 768px) {
             .img-desktop { display: none; }
             .img-mobile { display: block; width: 100%; }
-        }
-
-        /* Deixa o botão principal de iniciar configuração super visível e brilhante */
-        div.stButton > button:first-child {
-            background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%) !important;
-            color: #FFFFFF !important;
-            font-weight: 800 !important;
-            font-size: 1rem !important;
-            padding: 16px 24px !important;
-            border-radius: 14px !important;
-            border: 1px solid rgba(56, 189, 248, 0.6) !important;
-            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4) !important;
-            width: 100% !important;
-        }
-        div.stButton > button:first-child:hover {
-            opacity: 0.95 !important;
-            border-color: #FFFFFF !important;
-            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.7) !important;
         }
     </style>
 
@@ -59,8 +42,8 @@ def renderizar_home():
     </div>
     """, unsafe_allow_html=True)
 
-    # Botão de Ação Principal (Agora com destaque máximo)
-    if st.button("🚀 INICIAR CONFIGURAÇÃO DO ECOSSISTEMA"):
+    # Botão de Ação Principal (Padrão original sem efeitos de brilho exagerados)
+    if st.button("🚀 INICIAR CONFIGURAÇÃO DO ECOSSISTEMA", use_container_width=True):
         st.session_state["pagina_atual"] = "pacote"
         st.session_state["etapa"] = 1
         st.rerun()
@@ -122,7 +105,7 @@ def renderizar_home():
     """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # FAQ / PERGUNTAS FREQUENTES
+    # FAQ / PERGUNTAS FREQUENTES (Corrigido para usar st.markdown corretamente)
     # -------------------------------------------------------------
     st.markdown("""
     <div class="tech-card">
@@ -139,6 +122,6 @@ def renderizar_home():
     # PORTAL EXECUTIVO
     # -------------------------------------------------------------
     st.markdown("<br>", unsafe_allow_html=True)
-    if st.button("🔐 Acessar Portal Executivo (Equipe)"):
+    if st.button("🔐 Acessar Portal Executivo (Equipe)", use_container_width=True):
         st.session_state["pagina_atual"] = "funcionarios"
         st.rerun()
