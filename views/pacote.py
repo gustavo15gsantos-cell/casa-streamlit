@@ -16,7 +16,7 @@ def salvar_pedido_real(dados, total):
         except Exception:
             pedidos = []
 
-    # Evita duplicar o mesmo pedido se o usuário atualizar a página na etapa 7
+    # Evita duplicar o mesmo pedido se o usuário atualizar a página na etapa final
     if any(p.get("nome") == dados["nome"].strip() and p.get("telefone") == dados["telefone"].strip() for p in pedidos):
         return
 
@@ -36,7 +36,7 @@ def salvar_pedido_real(dados, total):
         "pacote": dados["pacote"],
         "fita_led": dados.get("fita_led", "Não selecionado"),
         "alexa": dados.get("alexa", "Não selecionado"),
-        "agendamento": f"{dados['data_agendamento']} • {dados['hora_agendamento']}",
+        "agendamento": "A combinar no WhatsApp",
         "total": f"R$ {total:.2f}",
         "status": "Pendente"
     }
@@ -57,9 +57,7 @@ def renderizar_pacote():
             "alexa": "Echo Dot 5ª Geração",
             "valor_alexa": 349.0,
             "nome": "",
-            "telefone": "",
-            "data_agendamento": "15/11/2026",
-            "hora_agendamento": "14:30"
+            "telefone": ""
         }
 
     etapa = st.session_state["etapa"]
@@ -74,11 +72,13 @@ def renderizar_pacote():
 
     exibir_logo_tech_home("Monte seu Pacote • Automação Residencial")
 
-    st.markdown(f'<div style="font-size: 0.85rem; color: #60A5FA; font-weight: 600; margin-bottom: 6px;">Etapa {etapa} de 7</div>', unsafe_allow_html=True)
-    st.progress(etapa / 7.0)
+    st.markdown(f'<div style="font-size: 0.85rem; color: #60A5FA; font-weight: 600; margin-bottom: 6px;">Etapa {etapa} de 6</div>', unsafe_allow_html=True)
+    st.progress(etapa / 6.0)
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # ETAPA 1: PACOTE BASE
+    # -------------------------------------------------------------
+    # ETAPA 1: ESCOLHER PACOTE BASE
+    # -------------------------------------------------------------
     if etapa == 1:
         st.markdown("### 1. Escolher Pacote Base")
         st.markdown("<p style='color: #94A3B8; font-size: 0.9rem;'>Selecione a modalidade ideal para a sua residência:</p>", unsafe_allow_html=True)
@@ -101,7 +101,9 @@ def renderizar_pacote():
                 st.session_state["etapa"] = 2
                 st.rerun()
 
-    # ETAPA 2: FITA LED
+    # -------------------------------------------------------------
+    # ETAPA 2: ESCOLHER FITA LED
+    # -------------------------------------------------------------
     elif etapa == 2:
         st.markdown("### 2. Escolher Fita LED")
         st.markdown("<p style='color: #94A3B8; font-size: 0.9rem;'>Selecione o comprimento da fita LED para o seu pacote</p>", unsafe_allow_html=True)
@@ -123,7 +125,9 @@ def renderizar_pacote():
 
         st.markdown('<div class="info-box-blue">ℹ️ A fita LED é instalada com fita dupla-face 3M e fonte incluída. Controlável via app.</div>', unsafe_allow_html=True)
 
-    # ETAPA 3: ALEXA
+    # -------------------------------------------------------------
+    # ETAPA 3: ESCOLHER ALEXA / DISPOSITIVO DE VOZ
+    # -------------------------------------------------------------
     elif etapa == 3:
         st.markdown("### 3. Escolher Central de Voz (Alexa)")
         st.markdown("<p style='color: #94A3B8; font-size: 0.9rem;'>Escolha o dispositivo inteligente para comando por voz:</p>", unsafe_allow_html=True)
@@ -142,7 +146,9 @@ def renderizar_pacote():
                 st.session_state["etapa"] = 4
                 st.rerun()
 
+    # -------------------------------------------------------------
     # ETAPA 4: RESUMO PARCIAL
+    # -------------------------------------------------------------
     elif etapa == 4:
         st.markdown("### 4. Resumo do Pedido")
         d = st.session_state["dados_pedido"]
@@ -150,29 +156,15 @@ def renderizar_pacote():
 
         st.markdown(f'<div class="tech-card"><div style="color: #60A5FA; font-weight: 700; margin-bottom: 8px;">Itens Selecionados:</div><div style="color: #F8FAFC; font-size: 0.9rem; margin-bottom: 4px;">• <b>Pacote:</b> {d["pacote"]}</div><div style="color: #F8FAFC; font-size: 0.9rem; margin-bottom: 4px;">• <b>Iluminação:</b> {d["fita_led"]}</div><div style="color: #F8FAFC; font-size: 0.9rem; margin-bottom: 8px;">• <b>Assistente:</b> {d["alexa"]}</div><hr style="border-color: #1E293B; margin: 10px 0;"><div style="color: #2589F5; font-weight: 800; font-size: 1.1rem;">Subtotal: R$ {total_parcial:.2f}</div></div>', unsafe_allow_html=True)
 
-        if st.button("Avançar para Agendamento →", key="avancar_agend"):
+        if st.button("Avançar para Contato →", key="avancar_contato"):
             st.session_state["etapa"] = 5
             st.rerun()
 
-    # ETAPA 5: AGENDAMENTO
+    # -------------------------------------------------------------
+    # ETAPA 5: DADOS DO CLIENTE
+    # -------------------------------------------------------------
     elif etapa == 5:
-        st.markdown("### 5. Agendar Instalação")
-        st.markdown("<p style='color: #94A3B8; font-size: 0.9rem;'>Escolha a melhor data e horário para nossa equipe ir até sua residência:</p>", unsafe_allow_html=True)
-
-        data_agenda = st.text_input("Data da Instalação (DD/MM/AAAA)", value=st.session_state["dados_pedido"]["data_agendamento"])
-        hora_agenda = st.text_input("Horário preferencial", value=st.session_state["dados_pedido"]["hora_agendamento"])
-
-        st.session_state["dados_pedido"]["data_agendamento"] = data_agenda
-        st.session_state["dados_pedido"]["hora_agendamento"] = hora_agenda
-
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("Confirmar Agendamento →", key="avancar_dados"):
-            st.session_state["etapa"] = 6
-            st.rerun()
-
-    # ETAPA 6: DADOS DO CLIENTE
-    elif etapa == 6:
-        st.markdown("### 6. Seus Dados de Contato")
+        st.markdown("### 5. Seus Dados de Contato")
         st.markdown("<p style='color: #94A3B8; font-size: 0.9rem;'>Informe seus dados para finalizarmos o atendimento:</p>", unsafe_allow_html=True)
 
         nome_cliente = st.text_input("Seu Nome Completo", value=st.session_state["dados_pedido"]["nome"])
@@ -186,22 +178,24 @@ def renderizar_pacote():
             if not nome_cliente.strip() or not tel_cliente.strip():
                 st.warning("Por favor, preencha seu nome e WhatsApp.")
             else:
-                st.session_state["etapa"] = 7
+                st.session_state["etapa"] = 6
                 st.rerun()
 
-    # ETAPA 7: FINALIZAÇÃO E SALVAMENTO AUTOMÁTICO
-    elif etapa == 7:
-        st.markdown("### 7. Pedido Pronto!")
+    # -------------------------------------------------------------
+    # ETAPA 6: FINALIZAÇÃO E BOTÃO WHATSAPP
+    # -------------------------------------------------------------
+    elif etapa == 6:
+        st.markdown("### 6. Pedido Pronto!")
         d = st.session_state["dados_pedido"]
         total_final = d.get("valor_base", 199.0) + d.get("valor_fita", 99.0) + d.get("valor_alexa", 349.0)
 
-        # Salva automaticamente na Área dos Funcionários ao chegar na etapa 7
+        # Salva o pedido automaticamente na Área dos Funcionários
         salvar_pedido_real(d, total_final)
 
-        st.markdown(f'<div class="tech-card"><div style="color: #60A5FA; font-weight: 700; margin-bottom: 10px;">Resumo TECH HOME:</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">👤 <b>Cliente:</b> {d["nome"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">📱 <b>WhatsApp:</b> {d["telefone"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">📦 <b>Pacote:</b> {d["pacote"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">💡 <b>LED:</b> {d["fita_led"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">🔊 <b>Alexa:</b> {d["alexa"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 8px;">📅 <b>Agendamento:</b> {d["data_agendamento"]} às {d["hora_agendamento"]}</div><hr style="border-color: #1E293B; margin: 10px 0;"><div style="color: #2589F5; font-weight: 800; font-size: 1.15rem;">Total Estimado: R$ {total_final:.2f}</div></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="tech-card"><div style="color: #60A5FA; font-weight: 700; margin-bottom: 10px;">Resumo TECH HOME:</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">👤 <b>Cliente:</b> {d["nome"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">📱 <b>WhatsApp:</b> {d["telefone"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">📦 <b>Pacote:</b> {d["pacote"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">💡 <b>LED:</b> {d["fita_led"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 4px;">🔊 <b>Alexa:</b> {d["alexa"]}</div><div style="color: #F8FAFC; font-size: 0.88rem; margin-bottom: 8px;">📅 <b>Agendamento:</b> A combinar no WhatsApp</div><hr style="border-color: #1E293B; margin: 10px 0;"><div style="color: #2589F5; font-weight: 800; font-size: 1.15rem;">Total Estimado: R$ {total_final:.2f}</div></div>', unsafe_allow_html=True)
 
-        texto_zap = f"Olá! Meu nome é {d['nome']}. Acabei de montar meu pacote na TECH HOME:\n- Pacote: {d['pacote']}\n- LED: {d['fita_led']}\n- Alexa: {d['alexa']}\n- Agendamento: {d['data_agendamento']} às {d['hora_agendamento']}\n- Total: R$ {total_final:.2f}. Gostaria de confirmar a instalação!"
+        texto_zap = f"Olá! Meu nome é {d['nome']}. Acabei de montar meu pacote na TECH HOME:\n- Pacote: {d['pacote']}\n- LED: {d['fita_led']}\n- Alexa: {d['alexa']}\n- Total: R$ {total_final:.2f}. Gostaria de entrar em contato para dúvidas e acertar data e horário!"
         texto_codificado = urllib.parse.quote(texto_zap)
         link_whatsapp = f"https://wa.me/5585999999999?text={texto_codificado}"
 
-        st.markdown(f'<a href="{link_whatsapp}" target="_blank" class="btn-whatsapp">💬 FINALIZAR PEDIDO PELO WHATSAPP</a>', unsafe_allow_html=True)
+        st.markdown(f'<a href="{link_whatsapp}" target="_blank" class="btn-whatsapp" style="text-align: center; line-height: 1.4;">💬 Entre em contato conosco para dúvidas e acertar algumas coisas como data e horário</a>', unsafe_allow_html=True)
