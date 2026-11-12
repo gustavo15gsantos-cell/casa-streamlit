@@ -20,7 +20,7 @@ def salvar_pedido(novo_pedido):
         json.dump(pedidos, f, ensure_ascii=False, indent=4)
 
 def renderizar_pacote():
-    exibir_logo_tech_home("Configuração de Ecossistema & Suporte")
+    exibir_logo_tech_home("Configuração de Ecossistema & Agendamento")
 
     # Inicializa o estado das etapas
     if "etapa" not in st.session_state:
@@ -40,14 +40,14 @@ def renderizar_pacote():
                 ('Seleção de Dispositivos' if etapa == 2 else 
                 ('Iluminação LED' if etapa == 3 else 
                 ('Assistente de Voz' if etapa == 4 else 
-                ('Resumo do Projeto' if etapa == 5 else 'Dados e Finalização'))))
+                ('Resumo do Projeto' if etapa == 5 else 'Agendamento e Finalização'))))
             }
         </div>
     </div>
     """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # ETAPA 1: ESCOLHA DO TIPO DE SERVIÇO (NOVO OU REPARO)
+    # ETAPA 1: ESCOLHA DO TIPO DE SERVIÇO
     # -------------------------------------------------------------
     if etapa == 1:
         st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">O que você precisa hoje?</h3>', unsafe_allow_html=True)
@@ -65,7 +65,7 @@ def renderizar_pacote():
             <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #EF4444; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
                 <div style="color: #FCA5A5; font-weight: 700; font-size: 0.92rem; margin-bottom: 6px;">⚠️ ATENÇÃO AOS TERMOS DE REPARO:</div>
                 <p style="color: #CBD5E1; font-size: 0.85rem; line-height: 1.5; margin: 0;">
-                    Realizamos serviços de reparo, manutenção e reconfiguração <b>exclusivamente em instalações realizadas pela TECH HOME</b>. Não prestamos suporte, assistência ou manutenção em dispositivos ou redes instalados por terceiros ou outras empresas.
+                    Realizamos serviços de reparo, manutenção e reconfiguração <b>exclusivamente em instalações realizadas pela TECH HOME</b>. Não prestamos suporte em dispositivos instalados por terceiros.
                 </p>
             </div>
             """, unsafe_allow_html=True)
@@ -84,7 +84,7 @@ def renderizar_pacote():
                 st.rerun()
 
     # -------------------------------------------------------------
-    # ETAPA 2: SELEÇÃO DE PACOTE / DISPOSITIVOS
+    # ETAPA 2: SELEÇÃO DE PACOTE
     # -------------------------------------------------------------
     elif etapa == 2:
         st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Selecione o Pacote Base</h3>', unsafe_allow_html=True)
@@ -108,7 +108,7 @@ def renderizar_pacote():
                 st.rerun()
 
     # -------------------------------------------------------------
-    # ETAPA 3: FITA LED ARQUITETÔNICA
+    # ETAPA 3: FITA LED
     # -------------------------------------------------------------
     elif etapa == 3:
         st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Iluminação Arquitetônica LED</h3>', unsafe_allow_html=True)
@@ -183,18 +183,25 @@ def renderizar_pacote():
                 st.session_state["etapa"] = 4
                 st.rerun()
         with col2:
-            if st.button("Avançar para Dados ➡️"):
+            if st.button("Avançar para Agendamento ➡️"):
                 st.session_state["etapa"] = 6
                 st.rerun()
 
     # -------------------------------------------------------------
-    # ETAPA 6: DADOS DO CLIENTE E FINALIZAÇÃO WHATSAPP
+    # ETAPA 6: CONTATO, LOCAL, DATA, HORA E FINALIZAÇÃO WHATSAPP
     # -------------------------------------------------------------
     elif etapa == 6:
-        st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">Dados para Contato</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 style="color: #FFFFFF; font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">📅 Agendamento e Dados de Contato</h3>', unsafe_allow_html=True)
         
         nome = st.text_input("Seu Nome Completo")
         telefone = st.text_input("Seu WhatsApp (com DDD)")
+        local_instalacao = st.text_input("Local / Endereço Completo (Rua, Número, Bairro e Cidade)")
+        
+        col_d, col_h = st.columns(2)
+        with col_d:
+            data_visita = st.date_input("Data Preferida para Atendimento")
+        with col_h:
+            horario_visita = st.selectbox("Horário Preferido", ["Manhã (09:00 - 12:00)", "Tarde (13:00 - 17:00)", "Noite (18:00 - 20:00)"])
 
         st.markdown("<br>", unsafe_allow_html=True)
 
@@ -205,19 +212,23 @@ def renderizar_pacote():
                 st.rerun()
         with col2:
             if st.button("✅ FINALIZAR E ENVIAR AO WHATSAPP"):
-                if not nome or not telefone:
-                    st.error("Por favor, preencha seu nome e WhatsApp.")
+                if not nome or not telefone or not local_instalacao:
+                    st.error("Por favor, preencha seu nome, WhatsApp e o endereço do local.")
                 else:
                     tipo_srv = st.session_state.get('tipo_servico', 'Novo Ecossistema')
                     pacote = st.session_state.get('pacote_base', 'Essencial')
                     fita = st.session_state.get('fita_led', 'Sem Fita')
                     voz = st.session_state.get('assistente_voz', 'Alexa')
+                    data_str = data_visita.strftime("%d/%m/%Y")
 
                     novo_pedido = {
                         "id": str(datetime.now().timestamp()),
-                        "data": datetime.now().strftime("%d/%m/%Y %H:%M"),
+                        "data_criacao": datetime.now().strftime("%d/%m/%Y %H:%M"),
                         "nome": nome,
                         "telefone": telefone,
+                        "local": local_instalacao,
+                        "data_agendamento": data_str,
+                        "horario": horario_visita,
                         "tipo": tipo_srv,
                         "pacote": pacote,
                         "fita_led": fita,
@@ -225,16 +236,16 @@ def renderizar_pacote():
                         "status": "Pendente"
                     }
 
-                    # Salva no arquivo JSON local para aparecer no portal executivo
+                    # Salva no JSON para aparecer no portal executivo
                     salvar_pedido(novo_pedido)
 
-                    # Prepara link do WhatsApp com mensagem corporativa formatada
-                    msg = f"*NOVO PEDIDO - TECH HOME*%0A%0A*Cliente:* {nome}%0A*WhatsApp:* {telefone}%0A*Serviço:* {tipo_srv}%0A*Pacote:* {pacote}%0A*Fita LED:* {fita}%0A*Assistente:* {voz}"
+                    # Mensagem formatada para o WhatsApp
+                    msg = f"*NOVO AGENDAMENTO - TECH HOME*%0A%0A*Cliente:* {nome}%0A*WhatsApp:* {telefone}%0A*Local:* {local_instalacao}%0A*Data Desejada:* {data_str} ({horario_visita})%0A*Serviço:* {tipo_srv}%0A*Pacote:* {pacote}%0A*Fita LED:* {fita}%0A*Assistente:* {voz}"
                     link_wpp = f"https://wa.me/5511999999999?text={msg}"
 
-                    st.success("Pedido registrado com sucesso em nosso sistema!")
+                    st.success("Pedido e agendamento registrados com sucesso!")
                     st.markdown(f"""
                     <a href="{link_wpp}" target="_blank" class="btn-whatsapp">
-                        💬 CLIQUE AQUI PARA ABRIR O WHATSAPP E FALAR COM A EQUIPE
+                        💬 CLIQUE AQUI PARA ABRIR O WHATSAPP E CONFIRMAR AGENDAMENTO
                     </a>
                     """, unsafe_allow_html=True)
