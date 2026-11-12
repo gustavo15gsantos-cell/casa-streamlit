@@ -16,8 +16,11 @@ def renderizar_home():
         <h1 style="color: #FFFFFF; font-size: 1.8rem; font-weight: 800; line-height: 1.25; margin-bottom: 12px;">
             O futuro da automação residencial de alto padrão.
         </h1>
-        <p style="color: #94A3B8; font-size: 0.98rem; line-height: 1.6; margin-bottom: 24px;">
-            Arquitetura IoT proprietária, iluminação arquitetônica de precisão e assistentes de voz integrados para residências exclusivas.
+        <p style="color: #94A3B8; font-size: 0.98rem; line-height: 1.6; margin-bottom: 16px;">
+            A <b>TECH HOME</b> é especializada no desenvolvimento e na implementação de infraestruturas de automação residencial de alto padrão. Combinando engenharia de ponta, design arquitetônico e ecossistemas IoT proprietários, transformamos residências tradicionais em ambientes totalmente integrados, inteligentes e seguros.
+        </p>
+        <p style="color: #94A3B8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+            Nossa missão é proporcionar o máximo de conforto, praticidade e eficiência através de iluminação inteligente de precisão, controle elétrico avançado e centrais de comando por voz de última geração.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -29,7 +32,7 @@ def renderizar_home():
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Seção de Pilares Tecnológicos (Em Português)
+    # Seção de Pilares Tecnológicos
     st.markdown('<p style="color: #94A3B8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 14px;">Pilares Tecnológicos</p>', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
