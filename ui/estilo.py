@@ -3,153 +3,145 @@ import streamlit as st
 def aplicar_estilo():
     st.markdown("""
     <style>
-        /* Fundo geral e tema escuro profissional */
+        /* Fundo corporativo global (Preto absoluto e azul escuro profundo) */
         .stApp {
-            background-color: #070B14;
-            color: #F8FAFC;
-            font-family: 'Inter', sans-serif;
+            background-color: #030712;
+            color: #F3F4F6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         .block-container {
-            max-width: 540px;
-            padding-top: 2.2rem;
-            padding-bottom: 4rem;
+            max-width: 620px;
+            padding-top: 2.5rem;
+            padding-bottom: 5rem;
         }
         
-        /* Esconder elementos nativos desnecessários */
+        /* Ocultar elementos padrão do Streamlit para visual de App nativo/enterprise */
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
         header {visibility: hidden;}
 
-        /* Cartões com efeito glassmorphism e borda neon sutil */
+        /* Cartões estilo Glassmorphism Corporativo */
         .tech-card {
-            background: linear-gradient(135deg, rgba(19, 28, 46, 0.8) 0%, rgba(11, 17, 30, 0.95) 100%);
-            border: 1px solid rgba(37, 137, 245, 0.2);
-            border-radius: 18px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(17, 24, 39, 0.85) 0%, rgba(3, 7, 18, 0.95) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
         }
         .tech-card-active {
-            background: linear-gradient(135deg, rgba(21, 34, 56, 0.95) 0%, rgba(15, 23, 42, 100%) 100%);
-            border: 1.5px solid #2589F5;
-            border-radius: 18px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 0 20px rgba(37, 137, 245, 0.35);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 1) 100%);
+            border: 1.5px solid #3B82F6;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 18px;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.25);
         }
 
-        /* Caixa de informação estilizada */
+        /* Caixas de destaque executivas */
         .info-box-blue {
-            background: linear-gradient(135deg, rgba(37, 137, 245, 0.15) 0%, rgba(19, 28, 46, 0.4) 100%);
+            background: rgba(37, 99, 235, 0.1);
             color: #93C5FD;
-            border-left: 4px solid #2589F5;
-            border-radius: 12px;
-            padding: 14px 16px;
-            font-size: 0.9rem;
+            border-left: 4px solid #3B82F6;
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 0.92rem;
             font-weight: 500;
-            margin: 16px 0;
-            border-top: 1px solid rgba(37, 137, 245, 0.2);
-            border-right: 1px solid rgba(37, 137, 245, 0.2);
-            border-bottom: 1px solid rgba(37, 137, 245, 0.2);
+            margin: 18px 0;
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
 
-        /* Botões principais com gradiente e efeito neon */
+        /* Botões de Ação Corporativa */
         .stButton > button {
             width: 100%;
-            background: linear-gradient(135deg, #2589F5 0%, #1D72D4 100%);
+            background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
             color: white;
             border: none;
-            border-radius: 14px;
-            padding: 0.75rem 1rem;
-            font-weight: 700;
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            font-weight: 600;
             font-size: 0.98rem;
-            letter-spacing: 0.3px;
-            box-shadow: 0 4px 15px rgba(37, 137, 245, 0.3);
-            transition: all 0.25s ease;
+            letter-spacing: 0.4px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
         }
         .stButton > button:hover {
-            background: linear-gradient(135deg, #3B9EFF 0%, #2589F5 100%);
-            box-shadow: 0 0 20px rgba(37, 137, 245, 0.6);
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
             transform: translateY(-1px);
             color: white;
         }
 
-        /* Botão verde estilo WhatsApp altamente chamativo */
+        /* Botão de WhatsApp em alta conversão */
         .btn-whatsapp {
             display: block;
             width: 100%;
-            background: linear-gradient(135deg, #25D366 0%, #1EBE5D 100%);
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
             color: #FFFFFF !important;
             text-align: center;
             text-decoration: none !important;
             font-weight: 700;
-            padding: 15px 18px;
-            border-radius: 14px;
-            font-size: 0.98rem;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-            margin-top: 12px;
-            transition: all 0.25s ease;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+            margin-top: 14px;
+            transition: all 0.2s ease;
         }
         .btn-whatsapp:hover {
-            background: linear-gradient(135deg, #2EE872 0%, #25D366 100%);
-            box-shadow: 0 0 25px rgba(37, 211, 102, 0.7);
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
             transform: translateY(-1px);
         }
 
-        /* Badges de status elegantes */
+        /* Badges executivos */
         .badge-pendente {
-            background-color: rgba(245, 158, 11, 0.15);
+            background-color: rgba(217, 119, 6, 0.15);
             color: #FBBF24;
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            padding: 4px 12px;
-            border-radius: 10px;
+            border: 1px solid rgba(217, 119, 6, 0.4);
+            padding: 4px 10px;
+            border-radius: 8px;
             font-size: 0.78rem;
-            font-weight: 700;
+            font-weight: 600;
         }
         .badge-confirmado {
-            background-color: rgba(37, 137, 245, 0.15);
+            background-color: rgba(37, 99, 235, 0.15);
             color: #60A5FA;
-            border: 1px solid rgba(37, 137, 245, 0.4);
-            padding: 4px 12px;
-            border-radius: 10px;
+            border: 1px solid rgba(37, 99, 235, 0.4);
+            padding: 4px 10px;
+            border-radius: 8px;
             font-size: 0.78rem;
-            font-weight: 700;
+            font-weight: 600;
         }
     </style>
     """, unsafe_allow_html=True)
 
-def exibir_logo_tech_home(subtitulo="Instalação e configuração de dispositivos com Alexa"):
-    # Cabeçalho limpo e clicável usando colunas para voltar à home sem botões feios
-    col_logo, col_home = [st.container(), None]
-    
-    with st.container():
-        col1, col2 = st.columns([4, 1])
-        with col1:
-            st.markdown(f"""
-            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
-                <svg width="50" height="50" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22 10C27.5 6 36.5 6 42 10" stroke="#2589F5" stroke-width="3.5" stroke-linecap="round"/>
-                    <path d="M26 15C29.5 12.5 34.5 12.5 38 15" stroke="#2589F5" stroke-width="3.5" stroke-linecap="round"/>
-                    <path d="M12 32L32 16L52 32" stroke="#2589F5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M18 28V52H46V28" stroke="#2589F5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M34 25L25 38H33L30 49L40 35H32L34 25Z" fill="#FFFFFF"/>
-                </svg>
-                <div>
-                    <div style="line-height: 1.05;">
-                        <span style="font-size: 1.6rem; font-weight: 800; color: #2589F5; letter-spacing: 0.5px;">TECH</span>
-                        <span style="font-size: 1.6rem; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px;"> HOME</span>
-                    </div>
-                    <div style="font-size: 0.8rem; color: #60A5FA; margin-top: 3px;">
-                        {subtitulo}
-                    </div>
+def exibir_logo_tech_home(subtitulo="Enterprise Smart Home Ecosystem"):
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        st.markdown(f"""
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 24px;">
+            <svg width="46" height="46" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="64" height="64" rx="14" fill="#0F172A"/>
+                <path d="M22 18C27.5 14 36.5 14 42 18" stroke="#3B82F6" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M14 36L32 20L50 36" stroke="#3B82F6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M20 32V48H44V32" stroke="#3B82F6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+                <div style="line-height: 1.1;">
+                    <span style="font-size: 1.55rem; font-weight: 800; color: #3B82F6; letter-spacing: 0.5px;">TECH</span>
+                    <span style="font-size: 1.55rem; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px;"> HOME</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #94A3B8; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px;">
+                    {subtitulo}
                 </div>
             </div>
-            """, unsafe_allow_html=True)
-        with col2:
-            if st.button("🏠 Início", key="btn_topo_home"):
-                st.session_state["pagina_atual"] = "home"
-                if "etapa" in st.session_state:
-                    st.session_state["etapa"] = 1
-                st.rerun()
-            
+        </div>
+        """, unsafe_allow_html=True)
+    with col2:
+        if st.button("Início", key="btn_topo_home"):
+            st.session_state["pagina_atual"] = "home"
+            if "etapa" in st.session_state:
+                st.session_state["etapa"] = 1
+            st.rerun()
