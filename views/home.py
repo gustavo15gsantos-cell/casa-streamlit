@@ -55,8 +55,8 @@ def renderizar_home():
     st.markdown("""
     <div class="desktop-grid">
         <div class="tech-card" style="margin-bottom: 0;">
-            <h3 style="color: #38BDF8; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                <span>📊</span> PADRÃO CORPORATIVO TECH HOME
+            <h3 style="color: #38BDF8; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;">
+                📊 PADRÃO CORPORATIVO TECH HOME
             </h3>
             <p style="color: #CBD5E1; font-size: 0.88rem; line-height: 1.6; margin-bottom: 10px;">
                 ✅ <b>100% Sem Quebra-Quebra:</b> Instalação limpa via protocolo sem fio de ultra-performance.
@@ -70,8 +70,8 @@ def renderizar_home():
         </div>
 
         <div class="tech-card" style="margin-bottom: 0;">
-            <h3 style="color: #38BDF8; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                <span>🏛️</span> PILARES DE ENGENHARIA
+            <h3 style="color: #38BDF8; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;">
+                🏛️ PILARES DE ENGENHARIA
             </h3>
             <p style="color: #CBD5E1; font-size: 0.88rem; line-height: 1.6; margin-bottom: 10px;">
                 🔹 <b>Automação Modular:</b> Expansão gradual sem necessidade de reestruturação elétrica complexa.
@@ -82,39 +82,6 @@ def renderizar_home():
             <p style="color: #CBD5E1; font-size: 0.88rem; line-height: 1.6; margin: 0;">
                 🔹 <b>Integração de Voz:</b> Central inteligente compatível com os principais assistentes do mercado.
             </p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="desktop-grid">
-        <div class="tech-card" style="margin-bottom: 0;">
-            <h3 style="color: #38BDF8; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                <span>🏠</span> CENÁRIOS DE USO DIÁRIO
-            </h3>
-            <p style="color: #CBD5E1; font-size: 0.88rem; line-height: 1.6; margin-bottom: 10px;">
-                🎬 <b>Modo Cinema:</b> Atenua as luzes, fecha as cortinas motorizadas e ativa o som com um único comando.
-            </p>
-            <p style="color: #CBD5E1; font-size: 0.88rem; line-height: 1.6; margin-bottom: 10px;">
-                🌙 <b>Modo Descanso:</b> Desliga tomadas de consumo passivo e ajusta a climatização ideal.
-            </p>
-            <p style="color: #CBD5E1; font-size: 0.88rem; line-height: 1.6; margin: 0;">
-                🔒 <b>Modo Ausente:</b> Simula presença residencial acendendo luzes em horários estratégicos.
-            </p>
-        </div>
-
-        <div class="tech-card" style="margin-bottom: 0;">
-            <h3 style="color: #38BDF8; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                <span>❓</span> PERGUNTAS FREQUENTES
-            </h3>
-            <div style="margin-bottom: 14px;">
-                <div style="color: #F8FAFC; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">Preciso quebrar paredes para realizar a instalação?</div>
-                <div style="color: #CBD5E1; font-size: 0.85rem; line-height: 1.5;">Não! Todo o nosso sistema opera via rede sem fio criptografada de alta velocidade, preservando 100% da sua estrutura civil.</div>
-            </div>
-            <div>
-                <div style="color: #F8FAFC; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">E se a conexão com a internet cair?</div>
-                <div style="color: #CBD5E1; font-size: 0.85rem; line-height: 1.5;">Os módulos locais continuam funcionando perfeitamente via automação interna local e comandos manuais nos interruptores inteligentes.</div>
-            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
