@@ -19,9 +19,6 @@ def renderizar_home():
         <p style="color: #94A3B8; font-size: 0.98rem; line-height: 1.6; margin-bottom: 16px;">
             A <b>TECH HOME</b> é especializada no desenvolvimento e na implementação de infraestruturas de automação residencial de alto padrão. Combinando engenharia de ponta, design arquitetônico e ecossistemas IoT proprietários, transformamos residências tradicionais em ambientes totalmente integrados, inteligentes e seguros.
         </p>
-        <p style="color: #94A3B8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
-            Nossa missão é proporcionar o máximo de conforto, praticidade e eficiência através de iluminação inteligente de precisão, controle elétrico avançado e centrais de comando por voz de última geração.
-        </p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -32,26 +29,25 @@ def renderizar_home():
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Seção de Pilares Tecnológicos
-    st.markdown('<p style="color: #94A3B8; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 14px;">Pilares Tecnológicos</p>', unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">💡</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Iluminação Inteligente</div></div>', unsafe_allow_html=True)
-    with col2:
-        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">🔌</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Rede Elétrica IoT</div></div>', unsafe_allow_html=True)
-    with col3:
-        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">🎙️</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Comando por Voz IA</div></div>', unsafe_allow_html=True)
-
-    col4, col5 = st.columns(2)
-    with col4:
-        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">⚙️</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Soluções Sob Medida</div></div>', unsafe_allow_html=True)
-    with col5:
-        st.markdown('<div class="tech-card" style="text-align: center; padding: 18px 12px;"><div style="font-size: 1.4rem; margin-bottom: 8px;">🛡️</div><div style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">Segurança Avançada</div></div>', unsafe_allow_html=True)
+    # SEÇÃO DE CONFIANÇA E SEGURANÇA (Para tranquilizar o cliente)
+    st.markdown("""
+    <div class="tech-card" style="border-left: 4px solid #10B981;">
+        <h3 style="color: #FFFFFF; font-size: 1.15rem; font-weight: 700; margin-bottom: 12px;">🛡️ Garantia e Segurança TECH HOME</h3>
+        <p style="color: #94A3B8; font-size: 0.9rem; line-height: 1.5; margin-bottom: 10px;">
+            • <b>Privacidade de Dados:</b> Suas informações de contato são utilizadas exclusivamente para o nosso atendimento técnico e não são compartilhadas.
+        </p>
+        <p style="color: #94A3B8; font-size: 0.9rem; line-height: 1.5; margin-bottom: 10px;">
+            • <b>Suporte Direto:</b> Todo o fechamento e alinhamento de datas são feitos diretamente pelo nosso WhatsApp oficial, garantindo total transparência.
+        </p>
+        <p style="color: #94A3B8; font-size: 0.9rem; line-height: 1.5; margin-bottom: 0px;">
+            • <b>Instalação Certificada:</b> Profissionais qualificados e equipamentos com garantia de fábrica.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Portal Corporativo (Área de Funcionários)
+    # Portal Corporativo
     col_centro = st.columns([1, 2, 1])
     with col_centro[1]:
         if st.button("🔒 PORTAL EXECUTIVO (TECH)", key="btn_ir_funcionarios"):
