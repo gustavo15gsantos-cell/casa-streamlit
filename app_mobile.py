@@ -24,14 +24,12 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
 
-    /* Ocultar menus padrão e sidebar para ganhar tela no celular */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     [data-testid="stSidebar"] {display: none;}
     [data-testid="collapsedControl"] {display: none;}
 
-    /* Ajustar respiro superior e lateral no smartphone */
     .block-container {
         padding-top: 1.2rem !important;
         padding-bottom: 3rem !important;
@@ -40,7 +38,6 @@ st.markdown("""
         max-width: 520px !important;
     }
 
-    /* Cabeçalho Compacto Mobile */
     .mobile-header {
         background: linear-gradient(145deg, #090D16 0%, #050811 100%);
         border: 1px solid rgba(56, 189, 248, 0.25);
@@ -51,12 +48,10 @@ st.markdown("""
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
-    /* Navegação em Grade 2x2 para polegar */
     div[data-testid="stHorizontalBlock"] {
         gap: 8px !important;
     }
 
-    /* Cards Compactos Mobile */
     .m-card {
         background: linear-gradient(145deg, #090D16 0%, #020617 100%);
         border: 1px solid rgba(56, 189, 248, 0.22);
@@ -80,7 +75,6 @@ st.markdown("""
         margin-bottom: 10px;
     }
 
-    /* Botões grandes e confortáveis para toque */
     .stButton > button {
         background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
         color: #FFFFFF;
@@ -98,7 +92,6 @@ st.markdown("""
         border-color: #38BDF8;
     }
 
-    /* Métricas 2x2 Mobile */
     .m-metric {
         background: #090D16;
         border: 1px solid rgba(56, 189, 248, 0.22);
@@ -111,7 +104,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# CONTROLE DE ESTADO (SEM DADOS FAKES)
+# CONTROLE DE ESTADO
 # ==========================================
 if "pagina_mobile" not in st.session_state:
     st.session_state["pagina_mobile"] = "inicio"
@@ -140,7 +133,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Menu de navegação rápido (2 botões por linha)
 nav1, nav2 = st.columns(2)
 with nav1:
     if st.button("🏠 Início", use_container_width=True):
@@ -259,13 +251,9 @@ elif pagina == "pacote":
 
     if st.button("📩 Solicitar Proposta", use_container_width=True):
         if escolhidos:
-            itens_txt = "
-".join([f"- {item}" for item in escolhidos])
+            itens_txt = "\n".join([f"- {item}" for item in escolhidos])
             st.session_state["orcamento_texto"] = (
-                f"Olá! Gostaria de solicitar orçamento para:
-{itens_txt}
-
-Estimativa: {total_str}"
+                f"Olá! Gostaria de solicitar orçamento para:\n{itens_txt}\n\nEstimativa: {total_str}"
             )
             st.session_state["pagina_mobile"] = "contato"
             st.rerun()
