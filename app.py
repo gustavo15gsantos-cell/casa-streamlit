@@ -6,15 +6,16 @@ import streamlit as st
 # ==========================================
 st.set_page_config(
     page_title="TECH HOME • Automação Residencial e IoT",
-    page_icon="Tech-HOME.jpeg",
+    page_icon="Tech-HOME.png",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 # ==========================================
-# ESTILO GLOBAL (TECHFLUX DARK)
+# ESTILO GLOBAL (TECHFLUX DARK + LOGO TRANSPARENTE)
 # ==========================================
-st.markdown("""
+st.markdown(
+    """
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -31,6 +32,14 @@ st.markdown("""
     section[data-testid="stSidebar"] {
         background-color: #050811;
         border-right: 1px solid rgba(56, 189, 248, 0.15);
+    }
+
+    /* Remove fundo e bordas da logo para ficar totalmente transparente */
+    .logo-transparente img {
+        background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
     }
 
     .tech-card {
@@ -97,7 +106,9 @@ st.markdown("""
         text-align: center;
     }
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 # ==========================================
 # CONTROLE DE ESTADO
@@ -115,29 +126,36 @@ if "orcamento_texto" not in st.session_state:
     st.session_state["orcamento_texto"] = ""
 
 # ==========================================
-# BARRA LATERAL (SIDEBAR) COM LOGO
+# BARRA LATERAL (SIDEBAR) COM LOGO TRANSPARENTE
 # ==========================================
 with st.sidebar:
-    st.markdown("""
+    st.markdown(
+        """
     <div style="text-align: center; padding: 10px 0 14px 0;">
-    """, unsafe_allow_html=True)
-    
-    # Inserção da logo na barra lateral
-    st.image("Tech-HOME.jpeg", use_container_width=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
-    st.markdown("""
+    st.markdown('<div class="logo-transparente">', unsafe_allow_html=True)
+    st.image("Tech-HOME.png", use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown(
+        """
         <p style="color: #94A3B8; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 8px; font-weight: 600;">
             Infraestrutura Inteligente
         </p>
     </div>
     <hr style="border-color: rgba(56, 189, 248, 0.18); margin-bottom: 18px;">
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     opcoes_menu = {
         "inicio": "🏠 Início",
         "pacote": "⚙️ Configurar Ecossistema",
         "contato": "💬 Dúvidas e Contato",
-        "funcionarios": "🔐 Portal Executivo"
+        "funcionarios": "🔐 Portal Executivo",
     }
 
     chaves = list(opcoes_menu.keys())
@@ -148,7 +166,7 @@ with st.sidebar:
         options=chaves,
         format_func=lambda x: opcoes_menu[x],
         index=indice_atual,
-        label_visibility="collapsed"
+        label_visibility="collapsed",
     )
 
     if escolha != st.session_state["pagina_atual"]:
@@ -156,20 +174,28 @@ with st.sidebar:
         st.rerun()
 
 # ==========================================
-# CABEÇALHO SUPERIOR COM LOGO
+# CABEÇALHO SUPERIOR COM LOGO TRANSPARENTE
 # ==========================================
+
+
 def exibir_logo_topo(subtitulo="Infraestrutura Residencial Inteligente"):
     col_l1, col_l2, col_l3 = st.columns([1, 1.5, 1])
     with col_l2:
-        st.image("Tech-HOME.jpeg", use_container_width=True)
-    
-    st.markdown(f"""
+        st.markdown('<div class="logo-transparente">', unsafe_allow_html=True)
+        st.image("Tech-HOME.png", use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown(
+        f"""
     <div style="text-align: center; padding: 0 0 22px 0;">
         <p style="color: #94A3B8; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; font-weight: 600;">
             {subtitulo}
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
+
 
 pagina = st.session_state["pagina_atual"]
 
@@ -179,16 +205,20 @@ pagina = st.session_state["pagina_atual"]
 if pagina == "inicio":
     exibir_logo_topo("Infraestrutura Residencial Inteligente")
 
-    st.markdown("""
+    st.markdown(
+        """
     <div class="img-desktop">
         <img src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1200&q=80" style="width: 100%; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); border: 1px solid rgba(56, 189, 248, 0.25);">
     </div>
     <div class="img-mobile">
         <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" style="width: 100%; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); border: 1px solid rgba(56, 189, 248, 0.25);">
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
-    st.markdown("""
+    st.markdown(
+        """
     <div class="hero-card">
         <div class="tech-badge">⚡ DIVISÃO CORPORATIVA • TECNOLOGIA IOT</div>
         <h1 style="color: #FFFFFF; font-size: 1.75rem; font-weight: 800; line-height: 1.3; margin-bottom: 12px;">
@@ -198,7 +228,9 @@ if pagina == "inicio":
             A <b style="color: #38BDF8;">TECH HOME</b> desenvolve e implementa ecossistemas residenciais inteligentes sem obras ou quebra-quebra. Unimos iluminação arquitetônica de precisão, controle elétrico inteligente e comandos por voz com Inteligência Artificial de última geração.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     if st.button("🚀 INICIAR CONFIGURAÇÃO DO ECOSSISTEMA", use_container_width=True):
         st.session_state["pagina_atual"] = "pacote"
@@ -208,7 +240,8 @@ if pagina == "inicio":
 
     col_esq, col_dir = st.columns(2)
     with col_esq:
-        st.markdown("""
+        st.markdown(
+            """
         <div class="tech-card" style="height: 100%;">
             <h3 style="color: #38BDF8; font-size: 1.08rem; font-weight: 700; margin-bottom: 16px;">
                 📊 PADRÃO CORPORATIVO TECH HOME
@@ -223,10 +256,13 @@ if pagina == "inicio":
                 ✅ <b>Segurança Criptografada:</b> Seus dados e sua rede residencial protegidos contra invasões externas.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
     with col_dir:
-        st.markdown("""
+        st.markdown(
+            """
         <div class="tech-card" style="height: 100%;">
             <h3 style="color: #38BDF8; font-size: 1.08rem; font-weight: 700; margin-bottom: 16px;">
                 🏛️ PILARES DE ENGENHARIA
@@ -241,7 +277,9 @@ if pagina == "inicio":
                 🔹 <b>Integração de Voz:</b> Central inteligente compatível com os principais assistentes do mercado.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
     st.markdown("<br>", unsafe_allow_html=True)
     if st.button("🔐 Acessar Portal Executivo (Equipe)", use_container_width=True):
@@ -254,12 +292,15 @@ if pagina == "inicio":
 elif pagina == "pacote":
     exibir_logo_topo("Configurador de Ecossistema IoT")
 
-    st.markdown("""
+    st.markdown(
+        """
     <div class="tech-card">
         <h3 style="color: #38BDF8; margin-top: 0;">⚙️ Simulador de Módulos Inteligentes</h3>
         <p style="color: #94A3B8; margin-bottom: 0;">Selecione os sistemas desejados para estimar o investimento e enviar para orçamento.</p>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     modulos = {
         "Iluminação Arquitetônica Inteligente (Interruptores touch e dimerização)": 1490.00,
@@ -274,15 +315,30 @@ elif pagina == "pacote":
 
     with c_mod:
         for nome, valor in modulos.items():
-            valor_str = f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+            valor_str = (
+                f"R$ {valor:,.2f}"
+                .replace(",", "X")
+                .replace(".", ",")
+                .replace("X", ".")
+            )
             if st.checkbox(f"{nome} — {valor_str}", key=f"chk_{nome}"):
                 escolhidos.append(nome.split(" (")[0])
                 total += valor
 
     with c_res:
-        total_str = f"R$ {total:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-        lista_html = "<br>".join([f"• {e}" for e in escolhidos]) if escolhidos else "Nenhum módulo selecionado."
-        st.markdown(f"""
+        total_str = (
+            f"R$ {total:,.2f}"
+            .replace(",", "X")
+            .replace(".", ",")
+            .replace("X", ".")
+        )
+        lista_html = (
+            "<br>".join([f"• {e}" for e in escolhidos])
+            if escolhidos
+            else "Nenhum módulo selecionado."
+        )
+        st.markdown(
+            f"""
         <div class="tech-card" style="border-color: rgba(56, 189, 248, 0.4);">
             <h4 style="color: #FFFFFF; margin-top: 0;">Resumo do Projeto</h4>
             <p style="color: #CBD5E1; font-size: 0.88rem; line-height: 1.6;">{lista_html}</p>
@@ -290,9 +346,13 @@ elif pagina == "pacote":
             <div style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase;">Investimento Estimado</div>
             <div style="font-size: 1.8rem; font-weight: 800; color: #38BDF8; margin-top: 4px;">{total_str}</div>
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
-        if st.button("📩 Solicitar Proposta com Esta Configuração", use_container_width=True):
+        if st.button(
+            "📩 Solicitar Proposta com Esta Configuração", use_container_width=True
+        ):
             if escolhidos:
                 itens_txt = "\n".join([f"- {item}" for item in escolhidos])
                 st.session_state["orcamento_texto"] = (
@@ -312,28 +372,54 @@ elif pagina == "contato":
     col_faq, col_form = st.columns([1.1, 0.9])
 
     with col_faq:
-        st.markdown("<h3 style='color: #38BDF8;'>❓ Perguntas Frequentes</h3>", unsafe_allow_html=True)
-        with st.expander("1. Preciso quebrar paredes ou passar novos fios?", expanded=True):
-            st.write("Não. Utilizamos módulos compactos de comunicação sem fio de alta frequência que se adaptam à sua caixa elétrica atual sem sujeira ou obras.")
-        with st.expander("2. Se a internet cair, a casa para de funcionar?", expanded=True):
-            st.write("De forma alguma. Toda a automação opera em rede local inteligente, mantendo os interruptores físicos e as rotinas locais funcionando normalmente mesmo sem internet.")
+        st.markdown(
+            "<h3 style='color: #38BDF8;'>❓ Perguntas Frequentes</h3>",
+            unsafe_allow_html=True,
+        )
+        with st.expander(
+            "1. Preciso quebrar paredes ou passar novos fios?", expanded=True
+        ):
+            st.write(
+                "Não. Utilizamos módulos compactos de comunicação sem fio de alta frequência que se adaptam à sua caixa elétrica atual sem sujeira ou obras."
+            )
+        with st.expander(
+            "2. Se a internet cair, a casa para de funcionar?", expanded=True
+        ):
+            st.write(
+                "De forma alguma. Toda a automação opera em rede local inteligente, mantendo os interruptores físicos e as rotinas locais funcionando normalmente mesmo sem internet."
+            )
         with st.expander("3. Como funciona a garantia e o suporte?", expanded=True):
-            st.write("Todos os projetos contam com 2 anos de garantia integral nos equipamentos e instalação, com atendimento técnico especializado.")
+            st.write(
+                "Todos os projetos contam com 2 anos de garantia integral nos equipamentos e instalação, com atendimento técnico especializado."
+            )
 
     with col_form:
-        st.markdown("<h3 style='color: #38BDF8;'>📩 Solicitar Orçamento</h3>", unsafe_allow_html=True)
+        st.markdown(
+            "<h3 style='color: #38BDF8;'>📩 Solicitar Orçamento</h3>",
+            unsafe_allow_html=True,
+        )
         with st.form("form_contato", clear_on_submit=True):
-            nome = st.text_input("Seu Nome Completo", placeholder="Digite seu nome")
-            telefone = st.text_input("WhatsApp ou Telefone", placeholder="(11) 99999-9999")
+            nome = st.text_input(
+                "Seu Nome Completo", placeholder="Digite seu nome"
+            )
+            telefone = st.text_input(
+                "WhatsApp ou Telefone", placeholder="(11) 99999-9999"
+            )
             mensagem = st.text_area(
                 "Detalhes do Projeto / Pacote",
                 value=st.session_state["orcamento_texto"],
                 height=140,
-                placeholder="Descreva os ambientes ou módulos que deseja automatizar..."
+                placeholder=(
+                    "Descreva os ambientes ou módulos que deseja automatizar..."
+                ),
             )
-            if st.form_submit_button("Enviar Solicitação", use_container_width=True):
+            if st.form_submit_button(
+                "Enviar Solicitação", use_container_width=True
+            ):
                 if nome.strip() and telefone.strip():
-                    st.success(f"Solicitação enviada com sucesso, {nome}! Entraremos em contato em breve.")
+                    st.success(
+                        f"Solicitação enviada com sucesso, {nome}! Entraremos em contato em breve."
+                    )
                     st.session_state["orcamento_texto"] = ""
                 else:
                     st.error("Por favor, preencha seu nome e telefone.")
@@ -347,15 +433,20 @@ elif pagina == "funcionarios":
     if not st.session_state["autenticado"]:
         _, col_login, _ = st.columns([1, 1.2, 1])
         with col_login:
-            st.markdown("""
+            st.markdown(
+                """
             <div class="tech-card" style="text-align: center;">
                 <div style="font-size: 2rem; margin-bottom: 8px;">🔐</div>
                 <h3 style="color: #FFFFFF; margin-top: 0;">Acesso Restrito</h3>
                 <p style="color: #94A3B8; font-size: 0.9rem; margin-bottom: 0;">Área exclusiva para gestão de ordens de serviço da TECH HOME.</p>
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            pin = st.text_input("PIN de Acesso (Padrão: 1234)", type="password", placeholder="••••")
+            pin = st.text_input(
+                "PIN de Acesso (Padrão: 1234)", type="password", placeholder="••••"
+            )
             b1, b2 = st.columns(2)
             with b1:
                 if st.button("Entrar com PIN", use_container_width=True):
@@ -371,7 +462,10 @@ elif pagina == "funcionarios":
     else:
         t1, t2 = st.columns([4, 1])
         with t1:
-            st.markdown("<h3 style='color: #38BDF8; margin: 0;'>📊 Painel Operacional</h3>", unsafe_allow_html=True)
+            st.markdown(
+                "<h3 style='color: #38BDF8; margin: 0;'>📊 Painel Operacional</h3>",
+                unsafe_allow_html=True,
+            )
             st.caption("Controle real de projetos e ordens de serviço.")
         with t2:
             if st.button("Sair", use_container_width=True):
@@ -385,21 +479,39 @@ elif pagina == "funcionarios":
         concluidos = sum(1 for o in lista_os if o["status"] == "Concluído")
 
         m1, m2, m3, m4 = st.columns(4)
-        m1.markdown(f"<div class='metric-box'><div style='color:#94A3B8;font-size:0.75rem;'>TOTAL DE PROJETOS</div><div style='font-size:1.7rem;font-weight:800;color:#FFF;'>{total_os}</div></div>", unsafe_allow_html=True)
-        m2.markdown(f"<div class='metric-box'><div style='color:#94A3B8;font-size:0.75rem;'>AGENDADOS</div><div style='font-size:1.7rem;font-weight:800;color:#F59E0B;'>{agendados}</div></div>", unsafe_allow_html=True)
-        m3.markdown(f"<div class='metric-box'><div style='color:#94A3B8;font-size:0.75rem;'>EM INSTALAÇÃO</div><div style='font-size:1.7rem;font-weight:800;color:#38BDF8;'>{em_inst}</div></div>", unsafe_allow_html=True)
-        m4.markdown(f"<div class='metric-box'><div style='color:#94A3B8;font-size:0.75rem;'>CONCLUÍDOS</div><div style='font-size:1.7rem;font-weight:800;color:#10B981;'>{concluidos}</div></div>", unsafe_allow_html=True)
+        m1.markdown(
+            f"<div class='metric-box'><div style='color:#94A3B8;font-size:0.75rem;'>TOTAL DE PROJETOS</div><div style='font-size:1.7rem;font-weight:800;color:#FFF;'>{total_os}</div></div>",
+            unsafe_allow_html=True,
+        )
+        m2.markdown(
+            f"<div class='metric-box'><div style='color:#94A3B8;font-size:0.75rem;'>AGENDADOS</div><div style='font-size:1.7rem;font-weight:800;color:#F59E0B;'>{agendados}</div></div>",
+            unsafe_allow_html=True,
+        )
+        m3.markdown(
+            f"<div class='metric-box'><div style='color:#94A3B8;font-size:0.75rem;'>EM INSTALAÇÃO</div><div style='font-size:1.7rem;font-weight:800;color:#38BDF8;'>{em_inst}</div></div>",
+            unsafe_allow_html=True,
+        )
+        m4.markdown(
+            f"<div class='metric-box'><div style='color:#94A3B8;font-size:0.75rem;'>CONCLUÍDOS</div><div style='font-size:1.7rem;font-weight:800;color:#10B981;'>{concluidos}</div></div>",
+            unsafe_allow_html=True,
+        )
 
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown("#### ➕ Cadastrar Nova Ordem de Serviço")
         with st.form("nova_os_form", clear_on_submit=True):
             c1, c2, c3 = st.columns(3)
             with c1:
-                cli = st.text_input("Nome do Cliente", placeholder="Nome do cliente real")
+                cli = st.text_input(
+                    "Nome do Cliente", placeholder="Nome do cliente real"
+                )
             with c2:
-                mod = st.text_input("Escopo / Módulos", placeholder="Ex: Iluminação + Voz")
+                mod = st.text_input(
+                    "Escopo / Módulos", placeholder="Ex: Iluminação + Voz"
+                )
             with c3:
-                tec = st.text_input("Técnico Responsável", placeholder="Nome do técnico")
+                tec = st.text_input(
+                    "Técnico Responsável", placeholder="Nome do técnico"
+                )
 
             if st.form_submit_button("Registrar Ordem de Serviço"):
                 if cli.strip() and mod.strip() and tec.strip():
@@ -408,7 +520,7 @@ elif pagina == "funcionarios":
                         "cliente": cli.strip(),
                         "modulo": mod.strip(),
                         "tecnico": tec.strip(),
-                        "status": "Agendado"
+                        "status": "Agendado",
                     })
                     st.rerun()
                 else:
@@ -416,7 +528,9 @@ elif pagina == "funcionarios":
 
         st.markdown("#### 📋 Ordens de Serviço Ativas")
         if not lista_os:
-            st.info("Nenhuma ordem de serviço cadastrada ainda. Utilize o formulário acima para registrar o primeiro projeto real.")
+            st.info(
+                "Nenhuma ordem de serviço cadastrada ainda. Utilize o formulário acima para registrar o primeiro projeto real."
+            )
         else:
             estados = ["Agendado", "Em Instalação", "Concluído"]
             for idx, item in enumerate(lista_os):
@@ -429,10 +543,12 @@ elif pagina == "funcionarios":
                     estados,
                     index=estados.index(item["status"]),
                     key=f"st_{item['id']}",
-                    label_visibility="collapsed"
+                    label_visibility="collapsed",
                 )
                 if novo_st != item["status"]:
-                    st.session_state["ordens_servico"][idx]["status"] = novo_st
+                    st.session_state["ordens_servico"][idx]["status"] = (
+                        novo_st
+                    )
                     st.rerun()
                 if r5.button("🗑️", key=f"rm_{item['id']}"):
                     st.session_state["ordens_servico"].pop(idx)
