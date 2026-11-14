@@ -138,7 +138,7 @@ with st.sidebar:
     )
 
     st.markdown('<div class="logo-transparente">', unsafe_allow_html=True)
-    st.image("TECH-HOME.pjeg", use_container_width=True)
+    st.image("Tech-HOME.jpeg", use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(
@@ -183,7 +183,7 @@ def exibir_logo_topo(subtitulo="Infraestrutura Residencial Inteligente"):
     col_l1, col_l2, col_l3 = st.columns([1, 1.5, 1])
     with col_l2:
         st.markdown('<div class="logo-transparente">', unsafe_allow_html=True)
-        st.image("TECH-HOME.pjeg", use_container_width=True)
+        st.image("Tech-HOME.jpeg", use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(
