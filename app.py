@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # ==========================================
-# ESTILO GLOBAL (TECHFLUX DARK + LOGO NÍTIDA)
+# ESTILO GLOBAL (TECHFLUX DARK + LOGO EM HTML/CSS PURO)
 # ==========================================
 st.markdown(
     """
@@ -34,13 +34,28 @@ st.markdown(
         border-right: 1px solid rgba(56, 189, 248, 0.15);
     }
 
-    /* Integração perfeita da logo com o tema escuro do site */
-    .logo-transparente img {
-        mix-blend-mode: screen !important;
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        filter: contrast(110%) brightness(105%);
+    /* Logo profissional em HTML puro (sem erros de ficheiro) */
+    .brand-logo-container {
+        text-align: center;
+        padding: 10px 0;
+    }
+    .brand-logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #FFFFFF;
+        display: inline-block;
+    }
+    .brand-logo span {
+        color: #38BDF8;
+    }
+    .brand-sub {
+        font-size: 0.65rem;
+        color: #94A3B8;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-top: 4px;
+        font-weight: 600;
     }
 
     .tech-card {
@@ -132,22 +147,11 @@ if "orcamento_texto" not in st.session_state:
 with st.sidebar:
     st.markdown(
         """
-    <div style="text-align: center; padding: 10px 0 14px 0;">
-    """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown('<div class="logo-transparente">', unsafe_allow_html=True)
-    st.image("Tech-HOME.jpeg", use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown(
-        """
-        <p style="color: #94A3B8; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 8px; font-weight: 600;">
-            Infraestrutura Inteligente
-        </p>
+    <div class="brand-logo-container">
+        <div class="brand-logo">⚡ TECH<span> HOME</span></div>
+        <div class="brand-sub">Infraestrutura Inteligente</div>
     </div>
-    <hr style="border-color: rgba(56, 189, 248, 0.18); margin-bottom: 18px;">
+    <hr style="border-color: rgba(56, 189, 248, 0.18); margin: 14px 0 18px 0;">
     """,
         unsafe_allow_html=True,
     )
@@ -180,18 +184,11 @@ with st.sidebar:
 
 
 def exibir_logo_topo(subtitulo="Infraestrutura Residencial Inteligente"):
-    col_l1, col_l2, col_l3 = st.columns([1, 1.5, 1])
-    with col_l2:
-        st.markdown('<div class="logo-transparente">', unsafe_allow_html=True)
-        st.image("Tech-HOME.jpeg", use_container_width=True)
-        st.markdown("</div>", unsafe_allow_html=True)
-
     st.markdown(
         f"""
-    <div style="text-align: center; padding: 0 0 22px 0;">
-        <p style="color: #94A3B8; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; font-weight: 600;">
-            {subtitulo}
-        </p>
+    <div class="brand-logo-container" style="padding: 10px 0 5px 0;">
+        <div class="brand-logo" style="font-size: 2rem;">⚡ TECH<span> HOME</span></div>
+        <div class="brand-sub" style="font-size: 0.78rem; letter-spacing: 2px;">{subtitulo}</div>
     </div>
     """,
         unsafe_allow_html=True,
