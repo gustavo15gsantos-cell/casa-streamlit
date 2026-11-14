@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # ==========================================
-# ESTILO GLOBAL (TECHFLUX DARK + REMOÇÃO TOTAL DO FUNDO DA LOGO)
+# ESTILO GLOBAL (TECHFLUX DARK + LOGO NÍTIDA)
 # ==========================================
 st.markdown(
     """
@@ -34,13 +34,13 @@ st.markdown(
         border-right: 1px solid rgba(56, 189, 248, 0.15);
     }
 
-    /* Remove totalmente o fundo preto/escuro da logo JPEG usando filtros avançados */
+    /* Integração perfeita da logo com o tema escuro do site */
     .logo-transparente img {
-        filter: invert(1) grayscale(100%) brightness(200%);
-        mix-blend-mode: lighten !important;
+        mix-blend-mode: screen !important;
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
+        filter: contrast(110%) brightness(105%);
     }
 
     .tech-card {
@@ -138,7 +138,7 @@ with st.sidebar:
     )
 
     st.markdown('<div class="logo-transparente">', unsafe_allow_html=True)
-    st.image("Tech-HOME.jpeg", use_container_width=True)
+    st.image("TECH-HOME.pjeg", use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(
@@ -183,7 +183,7 @@ def exibir_logo_topo(subtitulo="Infraestrutura Residencial Inteligente"):
     col_l1, col_l2, col_l3 = st.columns([1, 1.5, 1])
     with col_l2:
         st.markdown('<div class="logo-transparente">', unsafe_allow_html=True)
-        st.image("Tech-HOME.jpeg", use_container_width=True)
+        st.image("TECH-HOME.pjeg", use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(
