@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # ==========================================
-# ESTILO GLOBAL (TECHFLUX DARK + REMOÇÃO DE FUNDO DA LOGO)
+# ESTILO GLOBAL (TECHFLUX DARK + REMOÇÃO TOTAL DO FUNDO DA LOGO)
 # ==========================================
 st.markdown(
     """
@@ -34,9 +34,10 @@ st.markdown(
         border-right: 1px solid rgba(56, 189, 248, 0.15);
     }
 
-    /* Mágica do CSS: Funde o fundo preto da logo com o fundo do site (#020617) */
+    /* Remove totalmente o fundo preto/escuro da logo JPEG usando filtros avançados */
     .logo-transparente img {
-        mix-blend-mode: screen !important;
+        filter: invert(1) grayscale(100%) brightness(200%);
+        mix-blend-mode: lighten !important;
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
