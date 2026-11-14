@@ -6,13 +6,13 @@ import streamlit as st
 # ==========================================
 st.set_page_config(
     page_title="TECH HOME • Automação Residencial e IoT",
-    page_icon="Tech-HOME.png",
+    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
 # ==========================================
-# ESTILO GLOBAL (TECHFLUX DARK + LOGO TRANSPARENTE)
+# ESTILO GLOBAL (TECHFLUX DARK + REMOÇÃO DE FUNDO DA LOGO)
 # ==========================================
 st.markdown(
     """
@@ -34,10 +34,10 @@ st.markdown(
         border-right: 1px solid rgba(56, 189, 248, 0.15);
     }
 
-    /* Remove fundo e bordas da logo para ficar totalmente transparente */
+    /* Mágica do CSS: Funde o fundo preto da logo com o fundo do site (#020617) */
     .logo-transparente img {
+        mix-blend-mode: screen !important;
         background: transparent !important;
-        background-color: transparent !important;
         border: none !important;
         box-shadow: none !important;
     }
@@ -126,7 +126,7 @@ if "orcamento_texto" not in st.session_state:
     st.session_state["orcamento_texto"] = ""
 
 # ==========================================
-# BARRA LATERAL (SIDEBAR) COM LOGO TRANSPARENTE
+# BARRA LATERAL (SIDEBAR) COM LOGO
 # ==========================================
 with st.sidebar:
     st.markdown(
@@ -137,7 +137,7 @@ with st.sidebar:
     )
 
     st.markdown('<div class="logo-transparente">', unsafe_allow_html=True)
-    st.image("Tech-HOME.png", use_container_width=True)
+    st.image("Tech-HOME.jpeg", use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(
@@ -174,7 +174,7 @@ with st.sidebar:
         st.rerun()
 
 # ==========================================
-# CABEÇALHO SUPERIOR COM LOGO TRANSPARENTE
+# CABEÇALHO SUPERIOR COM LOGO
 # ==========================================
 
 
@@ -182,7 +182,7 @@ def exibir_logo_topo(subtitulo="Infraestrutura Residencial Inteligente"):
     col_l1, col_l2, col_l3 = st.columns([1, 1.5, 1])
     with col_l2:
         st.markdown('<div class="logo-transparente">', unsafe_allow_html=True)
-        st.image("Tech-HOME.png", use_container_width=True)
+        st.image("Tech-HOME.jpeg", use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(
