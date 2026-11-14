@@ -1,12 +1,12 @@
-import streamlit as st
 from datetime import datetime
+import streamlit as st
 
 # ==========================================
 # CONFIGURAÇÃO DA PÁGINA
 # ==========================================
 st.set_page_config(
     page_title="TECH HOME • Automação Residencial e IoT",
-    page_icon="⚡",
+    page_icon="Tech-HOME.jpeg",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -100,7 +100,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# CONTROLE DE ESTADO (SEM DADOS FAKES)
+# CONTROLE DE ESTADO
 # ==========================================
 if "pagina_atual" not in st.session_state:
     st.session_state["pagina_atual"] = "inicio"
@@ -115,18 +115,18 @@ if "orcamento_texto" not in st.session_state:
     st.session_state["orcamento_texto"] = ""
 
 # ==========================================
-# BARRA LATERAL (SIDEBAR)
+# BARRA LATERAL (SIDEBAR) COM LOGO
 # ==========================================
 with st.sidebar:
     st.markdown("""
-    <div style="text-align: center; padding: 14px 0 18px 0;">
-        <div style="display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; background: rgba(56, 189, 248, 0.1); border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.35); margin-bottom: 10px; font-size: 24px;">
-            ⚡
-        </div>
-        <h2 style="color: #FFFFFF; font-size: 1.45rem; font-weight: 800; margin: 0; letter-spacing: 0.5px;">
-            TECH <span style="color: #38BDF8;">HOME</span>
-        </h2>
-        <p style="color: #94A3B8; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; font-weight: 600;">
+    <div style="text-align: center; padding: 10px 0 14px 0;">
+    """, unsafe_allow_html=True)
+    
+    # Inserção da logo na barra lateral
+    st.image("Tech-HOME.jpeg", use_container_width=True)
+
+    st.markdown("""
+        <p style="color: #94A3B8; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 8px; font-weight: 600;">
             Infraestrutura Inteligente
         </p>
     </div>
@@ -156,17 +156,15 @@ with st.sidebar:
         st.rerun()
 
 # ==========================================
-# CABEÇALHO SUPERIOR
+# CABEÇALHO SUPERIOR COM LOGO
 # ==========================================
 def exibir_logo_topo(subtitulo="Infraestrutura Residencial Inteligente"):
+    col_l1, col_l2, col_l3 = st.columns([1, 1.5, 1])
+    with col_l2:
+        st.image("Tech-HOME.jpeg", use_container_width=True)
+    
     st.markdown(f"""
-    <div style="text-align: center; padding: 6px 0 22px 0;">
-        <div style="display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; background: rgba(56, 189, 248, 0.1); border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.35); margin-bottom: 10px; font-size: 26px; box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);">
-            ⚡
-        </div>
-        <h1 style="color: #FFFFFF; font-size: 1.9rem; font-weight: 800; margin: 0; letter-spacing: 0.5px;">
-            TECH <span style="color: #38BDF8;">HOME</span>
-        </h1>
+    <div style="text-align: center; padding: 0 0 22px 0;">
         <p style="color: #94A3B8; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; font-weight: 600;">
             {subtitulo}
         </p>
